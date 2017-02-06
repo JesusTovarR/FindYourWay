@@ -1,7 +1,7 @@
 <?php
 
 
-namespace app;
+namespace api;
 
 use \Illuminate\Database\Capsule\Manager;
 
