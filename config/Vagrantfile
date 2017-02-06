@@ -24,8 +24,11 @@ hostname        = "ATELIER-WEB-SERV"
 vhost_s_public         = "play.findyourway.local"
 vhost_d_public         = "/var/www/FindYourWay/webclient"
 
-vhost_s_private         = "backend.findyourway.local"
-vhost_d_private         = "/var/www/FindYourWay/api"
+vhost_s_api_public       = "backend.findyourway.local"
+vhost_d_api_public        = "/var/www/FindYourWay/api/public"
+
+vhost_s_api_private         = "admin.findYourWay.local"
+vhost_d_api_private      = "/var/www/FindYourWay/api/private"
 
 # Set a local private network IP address.
 # Ise only a private IP
@@ -341,7 +344,8 @@ Vagrant.configure("2") do |config|
   # Add these to the same directory as the Vagrantfile.
   ##########
   config.vm.provision "public" ,type:"shell", inline: "sudo vhost -s #{vhost_s_public} -d #{vhost_d_public}"
-  config.vm.provision "private", type:"shell", inline: "sudo vhost -s #{vhost_s_private} -d #{vhost_d_private}"
+  config.vm.provision "api_private", type:"shell", inline: "sudo vhost -s #{vhost_s_api_private} -d #{vhost_d_api_private}"
+  config.vm.provision "api_public", type:"shell", inline: "sudo vhost -s #{vhost_s_api_public} -d #{vhost_d_api_public}"
   #config.vm.provision "shell", path: "./scripts/local-init.sh"
 
 end
