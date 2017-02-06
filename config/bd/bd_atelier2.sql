@@ -41,7 +41,7 @@ create table partie(
 );
 
 
-create table Utilisateur(
+create table utilisateur(
 	id_utilisateur int not null auto_increment primary key,
     nom varchar(50) not null,
     email varchar(50) not null,
