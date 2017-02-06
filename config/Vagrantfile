@@ -21,7 +21,7 @@ hostname        = "ATELIER-WEB-SERV"
 # vhost configuration
 # other vhosts can be added by using the vhost facility inside the vm
 #$ sudo vhost -s vhost_hostname -d vhost_docroot
-vhost_s_public         = "play.finyourway.local"
+vhost_s_public         = "play.findyourway.local"
 vhost_d_public         = "/var/www/FindYourWay/webclient"
 
 vhost_s_private         = "backend.findyourway.local"
