@@ -9,6 +9,3 @@ class Lieu extends Model{
       protected $primaryKey = "id";
       public $timestamps = false;
 }
-
-
-      
