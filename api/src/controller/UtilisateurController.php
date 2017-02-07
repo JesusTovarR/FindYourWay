@@ -21,7 +21,7 @@ class UtilisateurController extends AbstractController
         $this->container = $var;
     }
 
-    public function getUrilisateurs(Request $request, Response $response)
+    public function getUrilisateurs(Request $request, Response $response, $args)
     {
         try {
             $response = $response->withStatus(200)->withHeader('Content-type', 'application/json');
