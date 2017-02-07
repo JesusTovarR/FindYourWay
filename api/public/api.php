@@ -6,6 +6,7 @@
  * Time: 16:34
  */
 use api\AppInit;
+use api\controller\UtilisateurController;
 
 require_once '../vendor/autoload.php';
 
@@ -37,5 +38,6 @@ $configuration['notFoundHandler'] = function ($c) {
 
 $c = new \Slim\Container($configuration);
 $app = new Slim\App($c);
-$app->get('/lieux', LieuxController::class.':getLieux')->setName('lieux');
+//$app->get('/lieux', LieuxController::class.':getLieux')->setName('lieux');
+$app->get('/utilisateurs', UtilisateurController::class.':getUrilisateur')->setName('utilisateur');
 $app->run();
