@@ -6,6 +6,10 @@
  * Time: 16:34
  */
 use api\AppInit;
+<<<<<<< HEAD
+=======
+use api\controller\UtilisateurController;
+>>>>>>> bf21c49bf41917d15ff6322fcca1197055c38f7e
 use api\controller\LieuxController;
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
@@ -41,7 +45,6 @@ $configuration['notFoundHandler'] = function ($c) {
 
 $c = new \Slim\Container($configuration);
 $app = new Slim\App($c) ;
-
 $app->get('/lieux',
   function (Request $req, Response $resp, $args){
     return (new LieuxController($this))->getLieux($req, $resp, $args);

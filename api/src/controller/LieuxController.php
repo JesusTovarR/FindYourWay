@@ -33,7 +33,7 @@ class LieuxController extends AbstractController
             $lieux = json_decode($lieux->toJson());
 
             foreach ($lieux as $lieu) {
-              array_push($col, ['lieu' => (array)$cat,
+              array_push($col, ['lieu' => (array)$lieu,
                                 'link' => ['self'=>
                                           ['href'=>$this->container['router']->pathFor('lieu',['id' => $lieu->id])]]]);
             }
@@ -56,7 +56,8 @@ class LieuxController extends AbstractController
 
           foreach ($lieux as $lieu) {
             if($lieu->dest_finale > 0){
-              array_push($col, ['lieu' => (array)$cat,
+              echo'yo';
+              array_push($col, ['lieu' => (array)$lieu,
                                 'link' => ['self'=>
                                             ['href'=>$this->container['router']->pathFor('lieu',['id' => $lieu->id])]]]);
             }
