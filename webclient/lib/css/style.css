@@ -1,0 +1,16 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+#map {
+    height: 95%;
+    width: 60%;
+}
+
+#map{
+    position: absolute;
+    left: 20%;
+    border-radius: 10px;
+    box-shadow: 2px 2px 25px #CCCCCC;
+}
