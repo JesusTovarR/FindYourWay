@@ -73,11 +73,11 @@ class LieuxController extends AbstractController
 
     public function getLieuById(Request $request, Response $response, $args){
       try{
-        $lieu = Lieu::select()->where('id', '=', $args['id'])->firtOrFail();
+        $lieu = Lieu::select()->where('id', '=', $args['id'])->firstOrFail();
         $response = $this->json_success($response, 200, $lieu->toJson());
       } catch(ModelNotFoundException $e) {
             $response = $response->withStatus(404)->withHeader('Content-type', 'application/json');
-            $errorMessage = ["error" => "ressource not found : " . $this['router']->pathFor('lieux')];
+            $errorMessage = ["error" => "ressource not found : " . $this['router']->pathFor('lieu')];
             $response->getBody()->write(json_encode($errorMessage));
       }
     }
