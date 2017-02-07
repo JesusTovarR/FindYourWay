@@ -45,6 +45,11 @@ $configuration['notFoundHandler'] = function ($c) {
 $c = new \Slim\Container($configuration);
 $app = new Slim\App($c) ;
 
+$app->get('/game/new',
+function(Request $req, Response $resp, $args){
+  return (new LieuxController($this))->newGame($req, $resp, $args);
+})->setName('newGame');
+
 $app->get('/lieu/{id}',
 function (Request $req, Response $resp, $args){
   return (new LieuxController($this))->getLieuById($req, $resp, $args);
