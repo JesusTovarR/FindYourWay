@@ -17,9 +17,9 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class LieuxController extends AbstractController
 {
 
-    public function __construct(ContainerInterface $container)
+    public function __construct($var)
     {
-        parent::__construct($container);
+        $this->container = $var;
     }
 
     public function getLieux(Request $request, Response $response, $args)
@@ -27,13 +27,16 @@ class LieuxController extends AbstractController
         $response = $response->withHeader('Content-type', 'application/json');
         try {
             $lieux = Lieu::all();
-            $cat_json = [];
+
+            $col = array();
+            $lieux = json_decode($lieux->toJson());
+
             foreach ($lieux as $lieu) {
-                $links = Util::createLinks($this->container['router']->pathFor('lieu',['id'=>$lieu->id]), Lieu::$associatedModels, true);
-                $tab = ['lieu' => $lieu, 'links' => $links];
-                array_push($cat_json, $tab);
+              array_push($col, ['lieu' => (array)$cat,
+                                'link' => ['self'=>
+                                          ['href'=>$this->container['router']->pathFor('lieu',['id' => $lieu->id])]]]);
             }
-            $response->getBody()->write(json_encode(['lieux' => $cat_json]));
+            $response->getBody()->write(json_encode($col));
         } catch (ModelNotFoundException $e) {
             $response = $response->withStatus(404)->withHeader('Content-type', 'application/json');
             $errorMessage = ["error" => "ressource not found : " . $this['router']->pathFor('lieux')];
