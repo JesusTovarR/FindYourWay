@@ -6,11 +6,8 @@
  * Time: 16:34
  */
 use api\AppInit;
-<<<<<<< HEAD
 use api\controller\UtilisateurController;
-=======
 use api\controller\LieuxController;
->>>>>>> 513ebd8bc569a09e158d3d44b827d0de1d20e105
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
@@ -48,7 +45,6 @@ $c = new \Slim\Container($configuration);
 $app = new Slim\App($c);
 $app->get('/utilisateurs', UtilisateurController::class.':getUrilisateur')->setName('utilisateur');
 $app = new Slim\App($c) ;
-
 $app->get('/lieux',
   function (Request $req, Response $resp, $args){
     return (new LieuxController($this))->getLieux($req, $resp, $args);
