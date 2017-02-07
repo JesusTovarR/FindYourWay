@@ -42,6 +42,7 @@ $configuration['notFoundHandler'] = function ($c) {
 
 $c = new \Slim\Container($configuration);
 $app = new Slim\App($c) ;
+$app->add('addheaders');
 
 $app->get('/game/new',
 function(Request $req, Response $resp, $args){
