@@ -47,9 +47,10 @@ $app->get('/lieux',
     return (new LieuxController($this))->getLieux($req, $resp, $args);
   })->setName('getAllLieux');
 
-$app->get('/destFinales',
+  $app->get('/destFinales',
   function (Request $req, Response $resp, $args){
     return (new LieuxController($this))->getDestFinale($req, $resp, $args);
   })->setName('getDestFinale');
+
 
 $app->run();
