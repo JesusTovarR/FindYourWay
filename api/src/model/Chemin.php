@@ -1,9 +1,8 @@
 <?php
 
-namespace src\model\Chemin;
+namespace api\model;
 
 use Illuminate\Database\Eloquent\Model as Model;
-use Illuminate\Database\Capsule\Manager as DB;
 
 Class Chemin extends Model
 {

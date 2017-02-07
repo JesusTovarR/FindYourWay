@@ -37,5 +37,5 @@ $configuration['notFoundHandler'] = function ($c) {
 
 $c = new \Slim\Container($configuration);
 $app = new Slim\App($c);
-$app->get('/place/{id}', PlaceController::class. ':getPlace')->setName('place');
+$app->get('/lieux', LieuxController::class.':getLieux')->setName('lieux');
 $app->run();

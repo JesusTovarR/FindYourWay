@@ -1,6 +1,6 @@
 <?php
 
-namespace src\model\Utilisateur;
+namespace api\model;
 
 Class Utilisateur extends Model {
   protected  $table = "utilisateur";
