@@ -6,7 +6,11 @@
  * Time: 16:34
  */
 use api\AppInit;
+use api\controller\LieuxController;
 
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
+use Illuminate\Database\Capsule\Manager as DB;
 require_once '../vendor/autoload.php';
 
 
@@ -36,6 +40,12 @@ $configuration['notFoundHandler'] = function ($c) {
 };
 
 $c = new \Slim\Container($configuration);
-$app = new Slim\App($c);
-$app->get('/lieux', LieuxController::class.':getLieux')->setName('lieux');
+$app = new Slim\App($c) ;
+
+$app->get('/lieux',
+  function (Request $req, Response $resp, $args){
+    return (new LieuxController($this))->getLieux($req, $resp, $args);
+  })->setName('getAllLieux');
+
+
 $app->run();
