@@ -8,9 +8,7 @@
 use api\AppInit;
 
 use api\controller\UtilisateurController;
-
 use api\controller\LieuxController;
-
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use Illuminate\Database\Capsule\Manager as DB;
@@ -44,6 +42,11 @@ $configuration['notFoundHandler'] = function ($c) {
 
 $c = new \Slim\Container($configuration);
 $app = new Slim\App($c) ;
+
+$app->get('/game/new',
+function(Request $req, Response $resp, $args){
+  return (new LieuxController($this))->newGame($req, $resp, $args);
+})->setName('newGame');
 
 $app->get('/lieu/{id}',
 function (Request $req, Response $resp, $args){
@@ -81,7 +84,15 @@ $app->get('/lieux',
   function  (Request $req, Response $resp, $args){
     return (new LieuxController($this))->getDestByChemin($req, $resp, $args);
   })->setName('destinationByChemin');
+$app->get('/utilisateurs',
+    function (Request $req, Response $resp, $args){
+        return (new UtilisateurController($this))->getUrilisateurs($req, $resp, $args);
+    })->setName('getUtilisateurs');
 
+$app->get('/utilisateurs/{id}',
+    function (Request $req, Response $resp, $args){
+        return (new UtilisateurController($this))->getUrilisateurById($req, $resp, $args);
+    })->setName('getUtilisateurById');
 
 
 $app->run();
