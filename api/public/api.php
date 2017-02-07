@@ -60,6 +60,18 @@ $app->get('/lieux',
     return (new LieuxController($this))->getDestFinale($req, $resp, $args);
   })->setName('getDestFinale');
 
+  //Obtenir les indications de chaque lieu pour un chemin
+  $app->get('/indications/{id}',
+  function (Request $req, Response $resp, $args){
+    return (new LieuxController($this))->getIndications($req, $resp, $args);
+  })->setName('indications');
+
+  // Obtenir tous les indices pour une destination finale
+  $app->get('/indices/{id}',
+  function (Request $req, Response $resp, $args){
+    return (new LieuxController($this))->getIndices($req, $resp, $args);
+  })->setName('indices');
+
   $app->get('/chemin/{id}',
   function  (Request $req, Response $resp, $args){
     return (new LieuxController($this))->getChemin($req, $resp, $args);

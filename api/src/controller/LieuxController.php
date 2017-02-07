@@ -71,6 +71,56 @@ class LieuxController extends AbstractController
       return $response;
     }
 
+
+    //Obtenir les indications de chaque lieu pour un chemin indications/id
+    public function getIndications(Request $request, Response $response, $args){
+      try{
+        $response = $response->withStatus(200)->withHeader('Content-type', 'application/json');
+        $lieu = Lieu::select()->get();
+        $chemin = Chemin::select()->where('id', '=', $args['id'])->firstOrFail();
+        $indications = array();
+
+        $lieuxPassage = array();
+        for ($i=1 ; $i<6 ; $i++){
+          $lieuxPassage[]= $chemin->pluck('id_lieu'.$i);
+        }
+
+        $lieuxPassage = json_decode($lieu->toJson());
+
+        foreach ($lieuxPassage as $lieu)
+        {
+          $indications[] = $lieu->indication;
+        }
+        $response->getBody()->write(json_encode($indications));
+      }catch(ModelNotFoundException $e) {
+        $response = $response->withStatus(404)->withHeader('Content-type', 'application/json');
+        $errorMessage = ["error" => "ressource not found"];
+        $response->getBody()->write(json_encode($errorMessage));
+      }
+      return $response;
+    }
+
+
+    // Obtenir tous les indices pour une destination finale indices/id
+    public function getIndices(Request $request, Response $response, $args){
+      $response = $response->withStatus(200)->withHeader('Content-type', 'application/json');
+      $lieu = Lieu::select()->where('id', '=', $args['id'])->firstOrFail();
+
+      if((!empty($lieu->indice1)) || (!empty($lieu->indice2)) || (!empty($lieu->indice3)) || (!empty($lieu->indice4)) || (!empty($lieu->indice5))){
+
+          $indices = array("Destination finale"=>$lieu->nom_lieu, "indice1"=>$lieu->indice1 , "indice2"=>$lieu->indice2,"indice3"=>$lieu->indice3,
+          "indice4"=>$lieu->indice4,"indice5"=>$lieu->indice5);
+          $response->getBody()->write(json_encode($indices));
+       }else{
+        $response = $response->withStatus(404)->withHeader('Content-type', 'application/json');
+        $errorMessage = ["error" => "ressource not found"];
+        $response->getBody()->write(json_encode($errorMessage));
+      }
+      return $response;
+    }
+
+
+
     public function getLieuById(Request $request, Response $response, $args){
       try{
         $lieu = Lieu::select()->where('id', '=', $args['id'])->firstOrFail();
