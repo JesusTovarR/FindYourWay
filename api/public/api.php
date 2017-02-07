@@ -6,10 +6,9 @@
  * Time: 16:34
  */
 use api\AppInit;
-<<<<<<< HEAD
-=======
+
 use api\controller\UtilisateurController;
->>>>>>> bf21c49bf41917d15ff6322fcca1197055c38f7e
+
 use api\controller\LieuxController;
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
@@ -45,6 +44,12 @@ $configuration['notFoundHandler'] = function ($c) {
 
 $c = new \Slim\Container($configuration);
 $app = new Slim\App($c) ;
+
+$app->get('/lieu/{id}',
+function (Request $req, Response $resp, $args){
+  return (new LieuxController($this))->getLieuById($req, $resp, $args);
+})->setName('lieu');
+
 $app->get('/lieux',
   function (Request $req, Response $resp, $args){
     return (new LieuxController($this))->getLieux($req, $resp, $args);
@@ -54,6 +59,17 @@ $app->get('/lieux',
   function (Request $req, Response $resp, $args){
     return (new LieuxController($this))->getDestFinale($req, $resp, $args);
   })->setName('getDestFinale');
+
+  $app->get('/chemin/{id}',
+  function  (Request $req, Response $resp, $args){
+    return (new LieuxController($this))->getChemin($req, $resp, $args);
+  })->setName('chemin');
+
+  $app->get('/destination/chemin/{id}',
+  function  (Request $req, Response $resp, $args){
+    return (new LieuxController($this))->getDestByChemin($req, $resp, $args);
+  })->setName('destinationByChemin');
+
 
 
 $app->run();
