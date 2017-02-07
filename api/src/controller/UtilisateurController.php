@@ -8,7 +8,6 @@
 namespace api\controller;
 
 use api\model\Utilisateur;
-use api\util\Util;
 use api\controller\AbstractController;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
@@ -17,26 +16,42 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class UtilisateurController extends AbstractController
 {
 
-    public function __construct($container)
+    public function __construct($var)
     {
-        $this->container = $container;
+        $this->container = $var;
     }
 
-    public function getUrilisateur(Request $request, Response $response)
+    public function getUrilisateurs(Request $request, Response $response)
     {
-        $response = $response->withHeader('Content-type', 'application/json');
         try {
+            $response = $response->withStatus(200)->withHeader('Content-type', 'application/json');
             $utilisateurs = Utilisateur::all();
-            $cat_json = [];
+
+            $col = array();
+            $utilisateurs = json_decode($utilisateurs->toJson());
+
             foreach ($utilisateurs as $utilisateur) {
-//                $links = Util::createLinks($this->container['router']->pathFor('utilisateur',['id'=>$utilisateur->id]));
-                $tab = ['utilisateurs' => $utilisateur];
-                array_push($cat_json, $tab);
+                array_push($col, ['utilisateur' => (array)$utilisateur,
+                                  'link'=> ['self'=>
+                                           ['href'=>$this->container['router']->pathFor('getUtilisateurById',['id'=>$utilisateur->id_utilisateur])]]]);
+                }
+                $response->getBody()->write(json_encode($col));
+            } catch (ModelNotFoundException $e) {
+                $response = $response->withStatus(404)->withHeader('Content-type', 'application/json');
+                $errorMessage = ["error" => "ressource not found : " . $this['router']->pathFor('getUtilisateurById')];
+                $response->getBody()->write(json_encode($errorMessage));
             }
-            $response->getBody()->write(json_encode(['utilisateur' => $cat_json]));
-        } catch (ModelNotFoundException $e) {
+            return $response;
+    }
+
+    public function getUrilisateurById(Request $request, Response $response, $args)
+    {
+        try {
+            $utilisateur = Utilisateur::select()->where('id_utilisateur', '=', $args['id'])->firstOrFail();
+            $response = $this->json_success($response, 200, $utilisateur->toJson());
+        } catch(ModelNotFoundException $e) {
             $response = $response->withStatus(404)->withHeader('Content-type', 'application/json');
-            $errorMessage = ["error" => "ressource not found : " . $this['router']->pathFor('utilisateur')];
+            $errorMessage = ["error" => "ressource not found : "];
             $response->getBody()->write(json_encode($errorMessage));
         }
         return $response;

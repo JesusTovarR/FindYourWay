@@ -9,7 +9,6 @@ namespace api\controller;
 
 use api\model\Lieu;
 use api\model\Chemin;
-use api\util\Util;
 use api\controller\AbstractController;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
