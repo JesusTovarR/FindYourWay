@@ -24,8 +24,9 @@ class LieuxController extends AbstractController
 
     public function getLieux(Request $request, Response $response, $args)
     {
-        $response = $response->withHeader('Content-type', 'application/json');
+
         try {
+            $response = $response->withStatus(200)->withHeader('Content-type', 'application/json');
             $lieux = Lieu::all();
 
             $col = array();
@@ -43,5 +44,29 @@ class LieuxController extends AbstractController
             $response->getBody()->write(json_encode($errorMessage));
         }
         return $response;
+    }
+
+    public function getDestFinale(Request $request, Response $response, $args){
+      try {
+          $response = $response->withStatus(200)->withHeader('Content-type', 'application/json');
+          $lieux = Lieu::all();
+
+          $col = array();
+          $lieux = json_decode($lieux->toJson());
+
+          foreach ($lieux as $lieu) {
+            if($lieu->dest_finale > 0){
+              array_push($col, ['lieu' => (array)$cat,
+                                'link' => ['self'=>
+                                            ['href'=>$this->container['router']->pathFor('lieu',['id' => $lieu->id])]]]);
+            }
+          }
+          $response->getBody()->write(json_encode($col));
+      } catch (ModelNotFoundException $e) {
+          $response = $response->withStatus(404)->withHeader('Content-type', 'application/json');
+          $errorMessage = ["error" => "ressource not found : " . $this['router']->pathFor('lieux')];
+          $response->getBody()->write(json_encode($errorMessage));
+      }
+      return $response;
     }
 }
