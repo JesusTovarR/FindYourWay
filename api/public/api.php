@@ -13,7 +13,6 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use Illuminate\Database\Capsule\Manager as DB;
 require_once '../vendor/autoload.php';
-require_once '../src/middleware/mapi.php';
 
 
 AppInit::bootEloquent('../conf/conf.ini');
