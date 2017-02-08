@@ -127,6 +127,12 @@ $app->get('/utilisateurs/{id}',
         return (new UtilisateurController($this))->addUser($req, $resp, $args);
       })->setName('addUser');
 
+      $app->get('/authentification',
+      function (Request $req, Response $resp, $args){
+        return (new UtilisateurController($this))->checkUser($req, $resp, $args);
+      })->setName('checkUser');
+
+
 //Obtenir les 5 lieux d'une partie /game/{id_partie}/lieux_partie?token={}
   $app->get('/game/{id_partie}/lieux_partie',
   function (Request $req, Response $resp, $args){
