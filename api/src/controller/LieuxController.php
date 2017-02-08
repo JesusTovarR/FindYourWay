@@ -176,7 +176,6 @@ class LieuxController extends AbstractController
     }
 
 
-
     public function getLieuById(Request $request, Response $response, $args){
       try{
         $lieu = Lieu::select()->where('id', '=', $args['id'])->firstOrFail();
@@ -215,22 +214,28 @@ class LieuxController extends AbstractController
     }
 
     //Obtenir les 5 lieux d'une partie /game/{id_partie}/lieux_partie?token={}
-    /*public function getLieuxPartie(Request $request, Response $response, $args){
+    public function getLieuxPartie(Request $request, Response $response, $args){
       try{
-      $partie = Partie::select()->where('id', '=', $args['id_partie'])->firstOrFail();
-      $lieu = Lieu::select()->get();
+        $response = $response->withStatus(200)->withHeader('Content-type', 'application/json');
+        $partie = Partie::select()->where('id', '=', $args['id_partie'])->firstOrFail();
+        //$lieu = Lieu::select()->get();
+        $chemin = Chemin::select('id_lieu1', 'id_lieu2', 'id_lieu3', 'id_lieu4', 'id_lieu5')->where('id', '=', $partie->id_chemin)->firstOrFail();
+        $lieux_partie = array();
 
-      foreach($lieu as $value){
-      $lieux_partie = array("Lieu1"=>$lieu->nom_lieu , "Lieu2"=>$lieu->nom_lieu,"Lieu3"=>$lieu->nom_lieu,
-      "Lieu4"=>$lieu->nom_lieu,"Lieu5"=>$lieu->nom_lieu);
-
-      $response->getBody()->write(json_encode($indices));
-    }
-      }catch(ModelNotFoundException $e){
+        $lieuxPassage = json_decode(json_encode($chemin), true);
+      $compteur = 1;
+        foreach ($lieuxPassage as $idLieu){
+          $lieu = Lieu::select('nom_lieu')->where('id','=', $idLieu)->firstOrFail();
+          $lieux_partie['Lieu '.$compteur] = $lieu;
+          $compteur++;
+        }
+        $response->getBody()->write(json_encode($lieux_partie));
+      }catch(ModelNotFoundException $e) {
         $response = $response->withStatus(404)->withHeader('Content-type', 'application/json');
-        $errorMessage = ["error" => "ressource not found" ];
+        $errorMessage = ["error" => "ressource not found"];
         $response->getBody()->write(json_encode($errorMessage));
       }
-    }*/
+      return $response;
+    }
 
 }
