@@ -210,8 +210,22 @@ class LieuxController extends AbstractController
     }
 
     //Obtenir les 5 lieux d'une partie /game/{id_partie}/lieux_partie?token={}
-    public function getLieuxPartie(Request $request, Response $response, $args){
-      
+    /*public function getLieuxPartie(Request $request, Response $response, $args){
+      try{
+      $partie = Partie::select()->where('id', '=', $args['id_partie'])->firstOrFail();
+      $lieu = Lieu::select()->get();
+
+      foreach($lieu as $value){
+      $lieux_partie = array("Lieu1"=>$lieu->nom_lieu , "Lieu2"=>$lieu->nom_lieu,"Lieu3"=>$lieu->nom_lieu,
+      "Lieu4"=>$lieu->nom_lieu,"Lieu5"=>$lieu->nom_lieu);
+
+      $response->getBody()->write(json_encode($indices));
     }
+      }catch(ModelNotFoundException $e){
+        $response = $response->withStatus(404)->withHeader('Content-type', 'application/json');
+        $errorMessage = ["error" => "ressource not found" ];
+        $response->getBody()->write(json_encode($errorMessage));
+      }
+    }*/
 
 }
