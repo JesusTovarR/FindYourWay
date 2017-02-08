@@ -122,4 +122,11 @@ $app->get('/utilisateurs/{id}',
   })->setName('lieux_partie')
     ->add('checkToken');
 
+//Obtenir la marge d’erreur possible entre le clic et les coordonnées d’une DF /game/{id_partie}/distanceDF?token={}
+    $app->get('/game/{id_partie}/distanceDF',
+    function (Request $req, Response $resp, $args){
+      return (new LieuxController($this))->getDistanceDF($req, $resp, $args);
+    })->setName('distanceDF')
+      ->add('checkToken');
+
 $app->run();
