@@ -127,12 +127,13 @@ class LieuxController extends AbstractController
     }
 
 
-    //Obtenir les indications de chaque lieu pour un chemin indications/id
+    //Obtenir les indications de chaque lieu pour une partie /game/id_partie/indications?token={}
     public function getIndications(Request $request, Response $response, $args){
       try{
         $response = $response->withStatus(200)->withHeader('Content-type', 'application/json');
+        $partie = Partie::select()->where('id', '=', $args['id_partie'])->firstOrFail();
         $lieu = Lieu::select()->get();
-        $chemin = Chemin::select()->where('id', '=', $args['id'])->firstOrFail();
+        $chemin = Chemin::select()->where('id', '=', $partie->id_chemin)->firstOrFail();
         $indications = array();
 
         $lieuxPassage = array();
@@ -144,7 +145,7 @@ class LieuxController extends AbstractController
 
         foreach ($lieuxPassage as $lieu)
         {
-          $indications[] = $lieu->indication;
+          $indications[$lieu->nom_lieu] = $lieu->indication;
         }
         $response->getBody()->write(json_encode($indications));
       }catch(ModelNotFoundException $e) {
@@ -210,5 +211,9 @@ class LieuxController extends AbstractController
       }
     }
 
+    //Obtenir les 5 lieux d'une partie /game/{id_partie}/lieux_partie?token={}
+    public function getLieuxPartie(Request $request, Response $response, $args){
+      
+    }
 
 }

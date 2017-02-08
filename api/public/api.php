@@ -66,11 +66,12 @@ $app->get('/lieux',
     return (new LieuxController($this))->getDestFinale($req, $resp, $args);
   })->setName('getDestFinale');
 
-  //Obtenir les indications de chaque lieu pour un chemin
-  $app->get('/indications/{id}',
+  //Obtenir les indications de chaque lieu pour une partie /game/id_partie/indications?token{}
+  $app->get('/game/{id_partie}/indications',
   function (Request $req, Response $resp, $args){
     return (new LieuxController($this))->getIndications($req, $resp, $args);
-  })->setName('indications');
+  })->setName('indications')
+    ->add('checkToken');
 
   // Obtenir tous les indices pour une destination finale
   $app->get('/indices/{id}',
@@ -100,5 +101,11 @@ $app->get('/utilisateurs/{id}',
         return (new UtilisateurController($this))->getUrilisateurById($req, $resp, $args);
     })->setName('getUtilisateurById');
 
+//Obtenir les 5 lieux d'une partie /game/{id_partie}/lieux_partie?token={}
+  $app->get('/game/{id_partie}/lieux_partie',
+  function (Request $req, Response $resp, $args){
+    return (new LieuxController($this))->getLieuxPartie($req, $resp, $args);
+  })->setName('lieux_partie')
+    ->add('checkToken');
 
 $app->run();
