@@ -65,10 +65,7 @@ angular.module('app').controller('LieuController', ['$scope', '$http', 'Lieu', '
             });
         };
 
-
         $scope.newGame();
-
-
 
     }
 ]);

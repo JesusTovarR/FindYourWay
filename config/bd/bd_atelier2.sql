@@ -36,6 +36,7 @@ create table chemin(
 
 create table partie(
 	  id int not null auto_increment primary key,
+	  token varchar(255) NOT NULL,
     distanceDF float not null,
     score int not null,
     id_chemin int not null,
@@ -97,4 +98,4 @@ null,null,null,null,null,0);
 
 INSERT INTO chemin VALUES (null,1,2,3,4,5,6);
 
-INSERT INTO partie VALUES (null,);
+INSERT INTO partie VALUES (null,'6ogdeqt586mxjw8lg9rh9hcdjacfz6zw',50000,0,1);
