@@ -6,6 +6,9 @@ angular.module('app').factory('LieuFactory', ['$http',function ($http) {
      'Content-Type': 'application/json'}};*/
 
     return {
+        newPartie:function () {
+            return $http.get('http://backend.findyourway.local/partie/new');
+        },
         getLieux:function () {
             return $http.get('http://backend.findyourway.local/lieux');
         },
