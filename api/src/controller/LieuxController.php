@@ -24,7 +24,6 @@ class LieuxController extends AbstractController
     }
 
     public function newGame(Request $request, Response $response, $args){
-        $response = $response->withStatus(200)->withHeader('Content-type', 'application/json');
     $game = new Partie;
 
       $factory = new \RandomLib\Factory;
@@ -74,8 +73,8 @@ class LieuxController extends AbstractController
       $chemin->save();
       $game->id_chemin = $chemin->id;
       $game->save();
-        $response->getBody()->write(json_encode($game));
-        return $response;
+
+      $response = $this->json_success($response, 201, $game->toJson());
     }
 
 
@@ -187,6 +186,7 @@ class LieuxController extends AbstractController
             $errorMessage = ["error" => "ressource not found : " . $this['router']->pathFor('lieu')];
             $response->getBody()->write(json_encode($errorMessage));
       }
+      return $response;
     }
 
     public function getChemin(Request $request, Response $response, $args){
@@ -199,6 +199,7 @@ class LieuxController extends AbstractController
         $errorMessage = ["error" => "ressource not found" ];
         $response->getBody()->write(json_encode($errorMessage));
       }
+      return $response;
     }
 
     public function getDestByChemin(Request $request, Response $response, $args){
@@ -208,8 +209,9 @@ class LieuxController extends AbstractController
         $dest = Lieu::select()->where('id', '=', $chemin->id_dest_finale)->firstOrFail();
         $response = $this->json_success($response, 200, $dest->toJson());
       } catch (ModelNotFoundException $e){
-        $response = $this->json_error($response, 500);
+        $response = $this->json_error($response, 500, 'une erreur est survenue');
       }
+      return $response;
     }
 
     //Obtenir les 5 lieux d'une partie /game/{id_partie}/lieux_partie?token={}
