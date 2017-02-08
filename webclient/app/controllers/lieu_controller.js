@@ -7,10 +7,6 @@ angular.module('app').controller('LieuController', ['$scope', '$http', 'Lieu', '
               /*  console.log('Bien');*/
                 $scope.error = undefined;
                 $scope.lieux = response.data;
-                for(i=0;){
-
-                }
-                console.log(response.data[0]);
                 // response.data.forEach(function (e) {
                 //     $scope.lieux.push(new Lieu(e));
                 // });
