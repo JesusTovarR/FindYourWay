@@ -3,6 +3,7 @@
 use \Illuminate\Database\Eloquent\ModelNotFoundException;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
+use api\model\Partie;
 
 function checkToken ( Request $rq, Response $rs, callable $next ) {
  // récupérer l'identifiant de cmmde dans la route et le token
