@@ -24,7 +24,8 @@ class LieuxController extends AbstractController
     }
 
     public function newGame(Request $request, Response $response, $args){
-      $game = new Partie;
+        $response = $response->withStatus(200)->withHeader('Content-type', 'application/json');
+    $game = new Partie;
 
       $factory = new \RandomLib\Factory;
       $generator = $factory->getMediumStrengthGenerator();
@@ -73,6 +74,8 @@ class LieuxController extends AbstractController
       $chemin->save();
       $game->id_chemin = $chemin->id;
       $game->save();
+        $response->getBody()->write(json_encode($game));
+        return $response;
     }
 
 

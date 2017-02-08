@@ -2,11 +2,11 @@ angular.module('app').controller('LieuController', ['$scope', '$http', 'Lieu', '
     function($scope, $http, Lieu, LieuFactory){
         $scope.cont = 0;
 
-        $scope.listAllLieu = function () {
-            LieuFactory.getLieux().then(function (response) {
+        $scope.newGame = function () {
+            LieuFactory.newPartie().then(function (response) {
               /*  console.log('Bien');*/
                 $scope.error = undefined;
-                $scope.lieux = response.data;
+                $scope.partie = response.data;
                 console.log(response.data);
                 // response.data.forEach(function (e) {
                 //     $scope.lieux.push(new Lieu(e));
@@ -17,7 +17,7 @@ angular.module('app').controller('LieuController', ['$scope', '$http', 'Lieu', '
         };
 
 
-        $scope.listAllLieu();
+        $scope.newGame();
 
 
 
