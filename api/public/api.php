@@ -45,7 +45,7 @@ $c = new \Slim\Container($configuration);
 $app = new Slim\App($c) ;
 $app->add('addheaders');
 
-$app->get('/game/new',
+$app->get('/partie/new',
 function(Request $req, Response $resp, $args){
   return (new LieuxController($this))->newGame($req, $resp, $args);
 })->setName('newGame');
@@ -60,6 +60,7 @@ $app->get('/lieux',
     return (new LieuxController($this))->getLieux($req, $resp, $args);
   })->setName('getAllLieux');
 
+  //retourne toute les destinations finales possibles
   $app->get('/destFinales',
   function (Request $req, Response $resp, $args){
     return (new LieuxController($this))->getDestFinale($req, $resp, $args);
@@ -77,15 +78,18 @@ $app->get('/lieux',
     return (new LieuxController($this))->getIndices($req, $resp, $args);
   })->setName('indices');
 
-  $app->get('/chemin/{id}',
+  $app->get('/game/{id_partie}/chemin',
   function  (Request $req, Response $resp, $args){
     return (new LieuxController($this))->getChemin($req, $resp, $args);
-  })->setName('chemin');
+  })->setName('chemin')
+    ->add('checkToken');
 
-  $app->get('/destination/chemin/{id}',
+  $app->get('/game/{id_partie}/destination',
   function  (Request $req, Response $resp, $args){
     return (new LieuxController($this))->getDestByChemin($req, $resp, $args);
-  })->setName('destinationByChemin');
+  })->setName('destinationByChemin')
+    ->add('checkToken');
+
 $app->get('/utilisateurs',
     function (Request $req, Response $resp, $args){
         return (new UtilisateurController($this))->getUrilisateurs($req, $resp, $args);
