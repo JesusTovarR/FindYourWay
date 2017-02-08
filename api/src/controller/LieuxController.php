@@ -43,7 +43,7 @@ class LieuxController extends AbstractController
       $destinationFinale = $tabDest[rand(0, $nbDestFinales-1)];
 
       $tabLieux = json_decode(json_encode($lieux), true);
-      $chemin->id_dest_finale = (int)$destinationFinale;
+      $chemin->id_dest_finale = (int)$destinationFinale['id'];
 
       $tmp = rand(0, count($tabLieux)-1);
       $chemin->id_lieu1 = (int)$tabLieux[$tmp]['id'];
@@ -80,7 +80,6 @@ class LieuxController extends AbstractController
 
     public function getLieux(Request $request, Response $response, $args)
     {
-
         try {
             $response = $response->withStatus(200)->withHeader('Content-type', 'application/json');
             $lieux = Lieu::all();
