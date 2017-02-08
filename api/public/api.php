@@ -22,6 +22,7 @@ $configuration = [
         'displayErrorDetails'=>true,
         'production'=>false],
 ];
+
 $configuration['notAllowedHandler'] = function ($c) {
     return function ($request, $response, $methods) use ($c) {
         return $c['response']
@@ -42,7 +43,20 @@ $configuration['notFoundHandler'] = function ($c) {
 
 $c = new \Slim\Container($configuration);
 $app = new Slim\App($c) ;
-$app->add('addheaders');
+
+$app->add(function ($rq, $rs, $next) {
+    $rs = $rs->withHeader('Content-Type', 'application/json');
+    return $next($rq, $rs);
+});
+
+$app->add(function ($rq, $rs, $next){
+    $origin = $rq->getHeader('origin');
+    if(empty($origin)){
+        $origin='*';
+    }
+    $rs=$rs->withHeader('Access-Control-Allow-Origin', $origin);
+    return $next($rq, $rs);
+});
 
 $app->get('/game/new',
 function(Request $req, Response $resp, $args){
@@ -94,6 +108,5 @@ $app->get('/utilisateurs/{id}',
     function (Request $req, Response $resp, $args){
         return (new UtilisateurController($this))->getUrilisateurById($req, $resp, $args);
     })->setName('getUtilisateurById');
-
 
 $app->run();
