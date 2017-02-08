@@ -4,6 +4,7 @@
 
 var map;
 var myLatLng =  {lat: 48.856577777778, lng:2.3518277777778};
+var flightPlanCoordinates = [];
 
 function initMap() {
 
@@ -12,9 +13,13 @@ function initMap() {
         zoom: 6
     });
 
+    var Init = new google.maps.LatLng(myLatLng.lat,myLatLng.lng);
+    flightPlanCoordinates.push(Init);
+
     var marker = new google.maps.Marker({
-        position: myLatLng,
+        position: Init,
         map: map,
+        draggable: true,
         title: 'Hello World!'
     });
 
@@ -29,20 +34,24 @@ function initMap() {
     map.addListener('click', function(e) {
         placeMarkerAndPanTo(e.latLng, map);
     });
-}
 
-var flightPlanCoordinates = [
-    myLatLng
-];
+    //metodo para medir las distancias
+   // console.log('obteniendo con Google :' + google.maps.geometry.spherical.computeDistanceBetween () + ' metros');
+}
 
 function placeMarkerAndPanTo(latLng, map) {
 
+    cont_lieu=0;
+    var distance = google.maps.geometry.spherical.computeDistanceBetween(flightPlanCoordinates[cont_lieu],latLng);
+    console.log(distance);
 
-    if(flightPlanCoordinates.length <= 4){
+    if(flightPlanCoordinates.length <= 4 && distance < 50000){
         console.log(flightPlanCoordinates);
 
         var marker = new google.maps.Marker({
             position: latLng,
+            animation: google.maps.Animation.DROP,
+            icon : 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
             map: map
         });
 
