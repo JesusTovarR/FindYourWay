@@ -24,7 +24,7 @@ class LieuxController extends AbstractController
     }
 
     public function newGame(Request $request, Response $response, $args){
-      $game = new Partie;
+    $game = new Partie;
 
       $factory = new \RandomLib\Factory;
       $generator = $factory->getMediumStrengthGenerator();
