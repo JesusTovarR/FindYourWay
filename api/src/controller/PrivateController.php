@@ -36,13 +36,29 @@ class PrivateController extends AbstractController
       return $response;
     }
 
+
     public function addIndice(Request $request, Response $response, $args){
-      $lieu = Lieu::select('indice1', 'indice2', 'indice3', 'indice4', 'indice5')->where('id', '=', $args['id'])->firstOrFail();
-      $tabIndice = json_decode(json_encode($lieu), true);
-      foreach($tabIndice as $indice){
-        if (!isset($indice)){
-          $indice = filter_var($request->getParsedBody()['indice'], FILTER_SANITIZE_STRING);
-        }
+      $lieu = Lieu::select()->where('id', '=', $args['id'])->firstOrFail();
+      $indice = filter_var($request->getParsedBody()['indice'], FILTER_SANITIZE_STRING);
+      if($lieu->indice1 == ''){
+        $lieu->indice1 = $indice;
+      }elseif($lieu->indice2 == ''){
+        $lieu->indice2 = $indice;
+      }elseif($lieu->indice3 == ''){
+        $lieu->indice3 = $indice;
+      }elseif($lieu->indice4 == ''){
+        $lieu->indice4 = $indice;
+      }elseif($lieu->indice5 == ''){
+        $lieu->indice5 = $indice;
+        $lieu->dest_finale = 1;
+      }else{
+        $lieu->dest_finale = 1;
+        $lieu->save();
+        $response = $this->json_error($response, 500, "supprimer un indice pour en ajouter un nouveau");
+        return $response;
       }
+      $lieu->save();
+      $response = $this->json_success($response, 201, $lieu->toJson());
+      return $response;
     }
 }
