@@ -13,7 +13,6 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use Illuminate\Database\Capsule\Manager as DB;
 require_once '../vendor/autoload.php';
-require_once '../src/middleware/mapi.php';
 
 
 AppInit::bootEloquent('../conf/conf.ini');
@@ -23,6 +22,7 @@ $configuration = [
         'displayErrorDetails'=>true,
         'production'=>false],
 ];
+
 $configuration['notAllowedHandler'] = function ($c) {
     return function ($request, $response, $methods) use ($c) {
         return $c['response']
@@ -43,7 +43,20 @@ $configuration['notFoundHandler'] = function ($c) {
 
 $c = new \Slim\Container($configuration);
 $app = new Slim\App($c) ;
-$app->add('addheaders');
+
+$app->add(function ($rq, $rs, $next) {
+    $rs = $rs->withHeader('Content-Type', 'application/json');
+    return $next($rq, $rs);
+});
+
+$app->add(function ($rq, $rs, $next){
+    $origin = $rq->getHeader('origin');
+    if(empty($origin)){
+        $origin='*';
+    }
+    $rs=$rs->withHeader('Access-Control-Allow-Origin', $origin);
+    return $next($rq, $rs);
+});
 
 $app->get('/partie/new',
 function(Request $req, Response $resp, $args){
@@ -66,11 +79,12 @@ $app->get('/lieux',
     return (new LieuxController($this))->getDestFinale($req, $resp, $args);
   })->setName('getDestFinale');
 
-  //Obtenir les indications de chaque lieu pour un chemin
-  $app->get('/indications/{id}',
+  //Obtenir les indications de chaque lieu pour une partie /game/id_partie/indications?token{}
+  $app->get('/game/{id_partie}/indications',
   function (Request $req, Response $resp, $args){
     return (new LieuxController($this))->getIndications($req, $resp, $args);
-  })->setName('indications');
+  })->setName('indications')
+    ->add('checkToken');
 
   // Obtenir tous les indices pour une destination finale
   $app->get('/indices/{id}',
@@ -100,5 +114,11 @@ $app->get('/utilisateurs/{id}',
         return (new UtilisateurController($this))->getUrilisateurById($req, $resp, $args);
     })->setName('getUtilisateurById');
 
+//Obtenir les 5 lieux d'une partie /game/{id_partie}/lieux_partie?token={}
+  $app->get('/game/{id_partie}/lieux_partie',
+  function (Request $req, Response $resp, $args){
+    return (new LieuxController($this))->getLieuxPartie($req, $resp, $args);
+  })->setName('lieux_partie')
+    ->add('checkToken');
 
 $app->run();
