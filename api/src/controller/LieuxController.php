@@ -179,7 +179,7 @@ class LieuxController extends AbstractController
             foreach ($lieuxPassage as $lieu)
             {
                 $cont=$cont+1;
-                $coordonees['Lieu'.$cont]= array('lat'=>$lieu->coord_y, 'long'=>$lieu->coord_x);
+                $coordonees['Lieu'.$cont]= array('lat'=>$lieu->lat, 'long'=>$lieu->lng);
                 if($cont==5){
                     $cont=0;
                 }
