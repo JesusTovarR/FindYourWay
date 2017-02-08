@@ -35,6 +35,17 @@ angular.module('app').controller('LieuController', ['$scope', '$http', 'Lieu', '
             });
         };
 
+        $scope.indices = function (){
+            LieuFactory.indices($scope.partie.id, $scope.partie.token).then(function (response){
+
+                console.log(response.data);
+                // $scope.chemin=response.data;
+
+            },function (error) {
+                console.log('error');
+            });
+        };
+
         $scope.chemin = function (){
             LieuFactory.chemin($scope.partie.id, $scope.partie.token).then(function (response){
 
