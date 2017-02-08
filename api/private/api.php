@@ -4,8 +4,7 @@ use api\AppInit;
 
 use api\controller\UtilisateurController;
 
-use api\controller\LieuxController;
-
+use api\controller\PrivateController;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use Illuminate\Database\Capsule\Manager as DB;
@@ -42,7 +41,13 @@ $app = new Slim\App($c) ;
 
 $app->post('/lieu',
 function (Request $req, Response $resp, $args){
-  return (new LieuxController($this))->addLieu($req, $resp, $args);
+  return (new privateController($this))->addLieu($req, $resp, $args);
 })->setName('addLieu');
+
+$app->post('/lieu/{id}/nouvelIndice',
+function (Request $req, Response $resp, $args){
+  return (new privateController($this))->addIndice($req, $resp, $args);
+})->setName('addIndice');
+
 
 $app->run();
