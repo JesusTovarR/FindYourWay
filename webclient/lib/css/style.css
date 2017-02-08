@@ -3,15 +3,21 @@ html, body {
     margin: 0;
     padding: 0;
 }
-#map {
-    height: 95%;
-    width: 60%;
+
+#info{
+    width: 30%;
+    float: left;
+    height: 100%;
+    box-sizing: border-box;
 }
 
 #map{
-    position: absolute;
-    left: 20%;
-    border-radius: 10px;
-    box-shadow: 2px 2px 25px #CCCCCC;
+    margin-top: 1%;
+    float: left;
+    width: 70%;
+    height: 95%;
+    border-radius: 15px;
+    box-shadow: 2px 2px 25px rgba(13, 13, 13, 0.49);
     border: #45b3ff;
+    box-sizing: border-box;
 }

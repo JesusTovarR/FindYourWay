@@ -187,7 +187,8 @@ class LieuxController extends AbstractController
 
     public function getChemin(Request $request, Response $response, $args){
       try{
-        $chemin = Chemin::select()->where('id', '=', $args['id'])->firstOrFail();
+        $partie = Partie::select()->where('id', '=', $args['id_partie'])->firstOrFail();
+        $chemin = Chemin::select()->where('id', '=', $partie->id_chemin)->firstOrFail();
         $response = $this->json_success($response, 200, $chemin->toJson());
       } catch(ModelNotFoundException $e){
         $response = $response->withStatus(404)->withHeader('Content-type', 'application/json');
@@ -198,7 +199,8 @@ class LieuxController extends AbstractController
 
     public function getDestByChemin(Request $request, Response $response, $args){
       try{
-        $chemin = Chemin::select()->where('id', '=', $args['id'])->firstOrFail();
+        $partie = Partie::select()->where('id', '=', $args['id_partie'])->firstOrFail();
+        $chemin = Chemin::select()->where('id', '=', $partie->id_chemin)->firstOrFail();
         $dest = Lieu::select()->where('id', '=', $chemin->id_dest_finale)->firstOrFail();
         $response = $this->json_success($response, 200, $dest->toJson());
       } catch (ModelNotFoundException $e){
