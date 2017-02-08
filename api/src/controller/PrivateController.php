@@ -45,4 +45,9 @@ class PrivateController extends AbstractController
         }
       }
     }
+
+    //suppression d'un indice
+    public function deleteIndice(Request $request, Response $response, $args){
+      
+    }
 }
