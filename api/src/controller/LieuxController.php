@@ -129,23 +129,28 @@ class LieuxController extends AbstractController
 
     //Obtenir les indications de chaque lieu pour une partie /game/id_partie/indications?token={}
     public function getIndications(Request $request, Response $response, $args){
-      try{
-        $response = $response->withStatus(200)->withHeader('Content-type', 'application/json');
-        $partie = Partie::select()->where('id', '=', $args['id_partie'])->firstOrFail();
-        $lieu = Lieu::select()->get();
-        $chemin = Chemin::select()->where('id', '=', $partie->id_chemin)->firstOrFail();
-        $indications = array();
+      try {
+          $response = $response->withStatus(200)->withHeader('Content-type', 'application/json');
+          $partie = Partie::select()->where('id', '=', $args['id_partie'])->firstOrFail();
+          $lieu = Lieu::select()->get();
+          $chemin = Chemin::select()->where('id', '=', $partie->id_chemin)->firstOrFail();
+          $indications = array();
 
-        $lieuxPassage = array();
-        for ($i=1 ; $i<6 ; $i++){
-          $lieuxPassage[]= $chemin->pluck('id_lieu'.$i);
-        }
+          $lieuxPassage = array();
+          for ($i = 1; $i < 6; $i++) {
+              $lieuxPassage[] = $chemin->pluck('id_lieu' . $i);
+          }
 
-        $lieuxPassage = json_decode($lieu->toJson());
-
+          $lieuxPassage = json_decode($lieu->toJson());
+        $cont=0;
         foreach ($lieuxPassage as $lieu)
         {
-          $indications[$lieu->nom_lieu] = $lieu->indication;
+            $cont=$cont+1;
+//          $indications[$lieu->nom_lieu] = $lieu->indication;
+          $indications['Lieu'.$cont] = $lieu->indication;
+            if($cont==5){
+                $cont=0;
+            }
         }
         $response->getBody()->write(json_encode($indications));
       }catch(ModelNotFoundException $e) {
@@ -154,6 +159,39 @@ class LieuxController extends AbstractController
         $response->getBody()->write(json_encode($errorMessage));
       }
       return $response;
+    }
+
+    //Obtenir les coordonees de chaque lieu pour une partie /game/id_partie/coordonees?token={}
+    public function getCoordonees(Request $request, Response $response, $args){
+        try {
+            $response = $response->withStatus(200)->withHeader('Content-type', 'application/json');
+            $partie = Partie::select()->where('id', '=', $args['id_partie'])->firstOrFail();
+            $lieu = Lieu::select()->get();
+            $chemin = Chemin::select()->where('id', '=', $partie->id_chemin)->firstOrFail();
+            $coordonees = array();
+
+            $lieuxPassage = array();
+            for ($i = 1; $i < 6; $i++) {
+                $lieuxPassage[] = $chemin->pluck('id_lieu' . $i);
+            }
+
+            $lieuxPassage = json_decode($lieu->toJson());
+            $cont=0;
+            foreach ($lieuxPassage as $lieu)
+            {
+                $cont=$cont+1;
+                $coordonees['Lieu'.$cont]= array('lat'=>$lieu->coord_y, 'long'=>$lieu->coord_x);
+                if($cont==5){
+                    $cont=0;
+                }
+            }
+            $response->getBody()->write(json_encode($coordonees));
+        }catch(ModelNotFoundException $e) {
+            $response = $response->withStatus(404)->withHeader('Content-type', 'application/json');
+            $errorMessage = ["error" => "ressource not found"];
+            $response->getBody()->write(json_encode($errorMessage));
+        }
+        return $response;
     }
 
 
@@ -227,7 +265,7 @@ class LieuxController extends AbstractController
 
         foreach ($lieuxPassage as $idLieu){
           $lieu = Lieu::select('nom_lieu')->where('id','=', $idLieu)->firstOrFail();
-          $lieux_partie['Lieu '.$compteur] = $lieu;
+          $lieux_partie['Lieu'.$compteur] = $lieu;
           $compteur++;
         }
         $response->getBody()->write(json_encode($lieux_partie));
