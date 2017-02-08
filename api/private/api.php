@@ -46,8 +46,7 @@ function (Request $req, Response $resp, $args){
 
 $app->post('/lieu/{id}/nouvelIndice',
 function (Request $req, Response $resp, $args){
-  return (new privateController($this))->addIndice($req, $resp, $args);
+  return (new PrivateController($this))->addIndice($req, $resp, $args);
 })->setName('addIndice');
-
 
 $app->run();

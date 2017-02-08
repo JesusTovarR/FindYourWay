@@ -9,6 +9,7 @@ namespace api\controller;
 
 use api\model\Utilisateur;
 use api\controller\AbstractController;
+use Exception;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -55,5 +56,33 @@ class UtilisateurController extends AbstractController
             $response->getBody()->write(json_encode($errorMessage));
         }
         return $response;
+    }
+
+    public function addUser(Request $request, Response $response, $args){
+        try{
+        $user = new Utilisateur;
+        $user->nom = filter_var($request->getParsedBody()['nom'], FILTER_SANITIZE_STRING);
+        $user->email = filter_var($request->getParsedBody()['email'], FILTER_SANITIZE_EMAIL);
+        $user->password = password_hash(filter_var($request->getParsedBody()['password'], FILTER_SANITIZE_STRING), PASSWORD_DEFAULT);
+        $user->nv_droit = 100;
+        $user->save();
+        $response = $this->json_success($response, 201, "utilisateur créé");
+      }catch(Exception $e){
+        $response = $this->json_error($response, 500, $e->getCode());
+        return $response;
+      }
+      return $response;
+    }
+
+
+//a finir
+    public function checkUser(Request $request, Response $response, $args){
+      $user = select()->where('nom', '=', filter_var($request->getParsedBody()['nom'], FILTER_SANITIZE_STRING));
+
+      if($user){
+        if(password_verify($user->password){
+
+        }
+      }
     }
 }
