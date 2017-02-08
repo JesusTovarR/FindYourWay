@@ -64,4 +64,9 @@ class PrivateController extends AbstractController
       $response = $this->json_success($response, 201, $lieu->toJson());
       return $response;
     }
+
+    //suppression d'un indice
+    public function deleteIndice(Request $request, Response $response, $args){
+      
+    }
 }

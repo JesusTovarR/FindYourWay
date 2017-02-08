@@ -87,6 +87,13 @@ $app->get('/lieux',
   })->setName('indications')
     ->add('checkToken');
 
+    //Obtenir les indications de chaque lieu pour une partie /game/id_partie/indications?token{}
+    $app->get('/game/{id_partie}/coordonees',
+    function (Request $req, Response $resp, $args){
+        return (new LieuxController($this))->getCoordonees($req, $resp, $args);
+    })->setName('coordones')
+    ->add('checkToken');
+
   // Obtenir tous les indices pour une destination finale
   $app->get('/indices/{id}',
   function (Request $req, Response $resp, $args){
