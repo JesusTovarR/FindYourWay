@@ -201,6 +201,7 @@ class LieuxController extends AbstractController
       return $response;
     }
 
+
     public function getDestByChemin(Request $request, Response $response, $args){
       try{
         $partie = Partie::select()->where('id', '=', $args['id_partie'])->firstOrFail();
@@ -213,17 +214,17 @@ class LieuxController extends AbstractController
       return $response;
     }
 
+
     //Obtenir les 5 lieux d'une partie /game/{id_partie}/lieux_partie?token={}
     public function getLieuxPartie(Request $request, Response $response, $args){
       try{
         $response = $response->withStatus(200)->withHeader('Content-type', 'application/json');
         $partie = Partie::select()->where('id', '=', $args['id_partie'])->firstOrFail();
-        //$lieu = Lieu::select()->get();
         $chemin = Chemin::select('id_lieu1', 'id_lieu2', 'id_lieu3', 'id_lieu4', 'id_lieu5')->where('id', '=', $partie->id_chemin)->firstOrFail();
         $lieux_partie = array();
-
         $lieuxPassage = json_decode(json_encode($chemin), true);
-      $compteur = 1;
+        $compteur = 1;
+
         foreach ($lieuxPassage as $idLieu){
           $lieu = Lieu::select('nom_lieu')->where('id','=', $idLieu)->firstOrFail();
           $lieux_partie['Lieu '.$compteur] = $lieu;
@@ -238,4 +239,17 @@ class LieuxController extends AbstractController
       return $response;
     }
 
+
+    //Obtenir la marge d’erreur possible entre le clic et les coordonnées d’une DF /game/{id_partie}/distanceDF?token={}
+    public function getDistanceDF(Request $request, Response $response, $args){
+      try{
+        $partie = Partie::select('distanceDF')->where('id', '=', $args['id_partie'])->firstOrFail();
+        $response = $this->json_success($response, 200, $partie->toJson());
+      }catch(ModelNotFoundException $e) {
+        $response = $response->withStatus(404)->withHeader('Content-type', 'application/json');
+        $errorMessage = ["error" => "ressource not found"];
+        $response->getBody()->write(json_encode($errorMessage));
+      }
+      return $response;
+    }
 }
