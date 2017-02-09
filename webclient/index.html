@@ -14,8 +14,8 @@
     <script src="app/controllers/lieu_controller.js"></script>
     <script src="app/controllers/map_controller.js"></script>
     <script src="app/directives/lieu_directive.js"></script>
+    <script src="app/directives/indice_directive.js"></script>
     <script src="app/factory/lieu_factory.js"></script>
-    <script src="app/models/lieu.js"></script>
 </head>
 <body ng-app="app">
 
@@ -35,12 +35,13 @@
         <indication></indication>
     </div>
     <hr/>
-    <div ng-repeat="indices in indice" >
+    <div ng-repeat="indice in indices" class="indications" >
         <indice></indice>
     </div>
 
 </div>
 </div>
+
 
     <div id="map"></div>
 

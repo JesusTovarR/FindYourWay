@@ -1,5 +1,5 @@
-angular.module('app').controller('LieuController', ['$scope', '$http', 'Lieu', 'LieuFactory',
-    function($scope, $http, Lieu, LieuFactory){
+angular.module('app').controller('LieuController', ['$scope', '$http', 'LieuFactory',
+    function($scope, $http, LieuFactory){
         $scope.newGame = function () {
             LieuFactory.newPartie().then(function (response) {
                 $scope.error = undefined;
@@ -16,6 +16,8 @@ angular.module('app').controller('LieuController', ['$scope', '$http', 'Lieu', '
         };
 
         $scope.indications = function (){
+            var id=localStorage.getItem("Partie");
+            var token=localStorage.getItem("Token");
             LieuFactory.indications($scope.partie.id, $scope.partie.token).then(function (response){
 
                console.log($scope.indications=response.data);
@@ -51,7 +53,7 @@ angular.module('app').controller('LieuController', ['$scope', '$http', 'Lieu', '
         $scope.indices = function (){
             LieuFactory.indices($scope.partie.id, $scope.partie.token).then(function (response){
 
-                 console.log( $scope.indices=response.data);
+                console.log( $scope.indices=response.data);
                 return $scope.indices=response.data;
 
             },function (error) {
