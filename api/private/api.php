@@ -8,6 +8,7 @@ use api\controller\PrivateController;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use Illuminate\Database\Capsule\Manager as DB;
+use Slim\Middleware\TokenAuthentication;
 require_once '../vendor/autoload.php';
 
 
