@@ -1,10 +1,13 @@
-<<<<<<< HEAD
-angular.module('app').controller('LieuController', ['$scope', '$http', 'LieuFactory',
-    function($scope, $http, LieuFactory){
-=======
+
 angular.module('app').controller('LieuController', ['$scope', '$rootScope', '$http', 'Lieu', 'LieuFactory',
     function($scope, $rootScope, $http, Lieu, LieuFactory){
->>>>>>> 58159c38c79eada597f22c69dc72a66915c9d70f
+
+        $scope.ind1=false;
+        $scope.ind2=false;
+        $scope.ind3=false;
+        $scope.ind4=false;
+        $scope.ind5=false;
+
         $scope.newGame = function () {
 
             LieuFactory.newPartie().then(function (response) {
