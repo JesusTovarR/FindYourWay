@@ -49,5 +49,10 @@ function (Request $req, Response $resp, $args){
   return (new privateController($this))->addIndice($req, $resp, $args);
 })->setName('addIndice');
 
+//modification d'un indice
+$app->put('/lieu/{id}/modifiedIndice',
+function (Request $req, Response $resp, $args){
+  return (new privateController($this))->modifyIndice($req, $resp, $args);
+})->setName('modifiedIndice');
 
 $app->run();

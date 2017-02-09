@@ -62,8 +62,16 @@ class PrivateController extends AbstractController
       return $response;
     }
 
-    //suppression d'un indice
-    public function deleteIndice(Request $request, Response $response, $args){
-      
+    //modification d'un indice
+    public function modifyIndice(Request $request, Response $response, $args){
+        $lieu = Lieu::select()->where('id','=',$args['id'])->firstOrFail();
+        $lieu->indice1 = filter_var($request->getParsedBody()['indice1'], FILTER_SANITIZE_STRING);
+        $lieu->indice2 = filter_var($request->getParsedBody()['indice2'], FILTER_SANITIZE_STRING);
+        $lieu->indice3 = filter_var($request->getParsedBody()['indice3'], FILTER_SANITIZE_STRING);
+        $lieu->indice4 = filter_var($request->getParsedBody()['indice4'], FILTER_SANITIZE_STRING);
+        $lieu->indice5 = filter_var($request->getParsedBody()['indice5'], FILTER_SANITIZE_STRING);
+        $lieu->save();
+        $response = $this->json_success($response, 201, $lieu->toJson());
+        return $response;
     }
 }
