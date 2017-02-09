@@ -38,6 +38,12 @@ $configuration['notFoundHandler'] = function ($c) {
 };
 
 $c = new \Slim\Container($configuration);
+$c['view'] = function($c){
+  $view = new \Slim\Views\Twig(__DIR__.'/backoffice/templates', ['cache'=> __DIR__.'/backoffice/templates']);
+
+   return $view;
+};
+
 $app = new Slim\App($c) ;
 
 $app->post('/lieu',
@@ -61,6 +67,11 @@ $app->delete('/lieu/{id}/deleteLieu',
 function (Request $req, Response $resp, $args){
   return (new privateController($this))->deleteLieu($req, $resp, $args);
 })->setName('deleteLieu');
+
+$app->get('/admin/formLieu',
+  function (Request $req, Response $resp, $args){
+    return (new privateController($this))->formLieu($req, $resp, $args);
+  })->setName('formLieu');
 
 
 $app->run();

@@ -110,6 +110,11 @@ class PrivateController extends AbstractController
         $errorMessage = ["error" => "id not found" ];
         $response->getBody()->write(json_encode($errorMessage));
     }
+  }
 
+  public function formLieu(Request $request, Response $response, $args){
+    $lieux = Lieu::select()->get();
+    $tabLieux = json_decode(json_encode($lieux));
+    return $this->container->view->render($response, 'lieux.twig', ['title'=>'titre', 'message' => 'salut']);
   }
 }
