@@ -1,11 +1,11 @@
-angular.module('app').controller('LieuController', ['$scope', '$http', 'Lieu', 'LieuFactory',
-    function($scope, $http, Lieu, LieuFactory){
+angular.module('app').controller('LieuController', ['$scope', '$rootScope', '$http', 'Lieu', 'LieuFactory',
+    function($scope, $rootScope, $http, Lieu, LieuFactory){
         $scope.newGame = function () {
+
             LieuFactory.newPartie().then(function (response) {
                 $scope.error = undefined;
-                $scope.partie = response.data;
+                $rootScope.partie = response.data;
                 $scope.indications();
-                $scope.coordonees();
                 $scope.chemin();
                 $scope.indices();
                 $scope.destinationFinal();
@@ -20,17 +20,6 @@ angular.module('app').controller('LieuController', ['$scope', '$http', 'Lieu', '
 
                console.log($scope.indications=response.data);
                  return $scope.indications=response.data;
-
-            },function (error) {
-                console.log('error');
-            });
-        };
-
-        $scope.coordonees = function (){
-            LieuFactory.coordonees($scope.partie.id, $scope.partie.token).then(function (response){
-
-                // console.log($scope.coordonees=response.data);
-                return $scope.coordonees=response.data;
 
             },function (error) {
                 console.log('error');
