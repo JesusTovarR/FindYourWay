@@ -8,6 +8,7 @@ use api\controller\PrivateController;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use Illuminate\Database\Capsule\Manager as DB;
+use Slim\Middleware\TokenAuthentication;
 require_once '../vendor/autoload.php';
 
 
@@ -37,6 +38,12 @@ $configuration['notFoundHandler'] = function ($c) {
 };
 
 $c = new \Slim\Container($configuration);
+$c['view'] = function($c){
+  $view = new \Slim\Views\Twig(__DIR__.'/backoffice/templates', ['cache'=> __DIR__.'/backoffice/templates']);
+
+   return $view;
+};
+
 $app = new Slim\App($c) ;
 
 $app->post('/lieu',
@@ -49,12 +56,22 @@ function (Request $req, Response $resp, $args){
   return (new PrivateController($this))->addIndice($req, $resp, $args);
 })->setName('addIndice');
 
-
 //modification d'un indice
 $app->put('/lieu/{id}/modifiedIndice',
 function (Request $req, Response $resp, $args){
   return (new privateController($this))->modifyIndice($req, $resp, $args);
 })->setName('modifiedIndice');
+
+//suppression d'un lieu lieu/{id}/deletelieu
+$app->delete('/lieu/{id}/deleteLieu',
+function (Request $req, Response $resp, $args){
+  return (new privateController($this))->deleteLieu($req, $resp, $args);
+})->setName('deleteLieu');
+
+$app->get('/admin/formLieu',
+  function (Request $req, Response $resp, $args){
+    return (new privateController($this))->formLieu($req, $resp, $args);
+  })->setName('formLieu');
 
 
 $app->run();

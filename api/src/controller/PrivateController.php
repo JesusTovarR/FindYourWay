@@ -3,6 +3,7 @@
 namespace api\controller;
 
 use api\model\Lieu;
+use api\model\Partie;
 use api\model\Chemin;
 use api\util\Util;
 use api\controller\AbstractController;
@@ -77,4 +78,43 @@ class PrivateController extends AbstractController
         $response = $this->json_success($response, 201, $lieu->toJson());
         return $response;
     }
+
+
+    //suppression d'un lieu lieu/{id}/deleteLieu
+    public function deleteLieu(Request $request, Response $response, $args){
+
+      try{
+      //je supprime un chemin
+      $chemin = Chemin::select()->where('id_dest_finale','=',$args['id'])
+        ->orWhere('id_lieu1','=',$args['id'])
+        ->orWhere('id_lieu2','=',$args['id'])
+        ->orWhere('id_lieu3','=',$args['id'])
+        ->orWhere('id_lieu4','=',$args['id'])
+        ->orWhere('id_lieu5','=',$args['id'])->get();
+
+      //je supprime donc une partie en supprimant mon chemin plus haut
+      foreach($chemin as $value){
+        $partie = Partie::select()->where('id_chemin','=',$value->id)->firstOrFail();
+        $partie->delete();
+        $value->delete();
+      }
+
+      //enfin, je supprime un lieu
+      $lieu = Lieu::select()->where('id','=',$args['id'])->firstOrFail();
+      $lieu->delete();
+
+      $response = $this->json_success($response, 201, "deletion done");
+      return $response;
+    }catch(ModelNotFoundException $e) {
+        $response = $response->withStatus(404)->withHeader('Content-type', 'application/json');
+        $errorMessage = ["error" => "id not found" ];
+        $response->getBody()->write(json_encode($errorMessage));
+    }
+  }
+
+  public function formLieu(Request $request, Response $response, $args){
+    $lieux = Lieu::select()->get();
+    $tabLieux = json_decode(json_encode($lieux));
+    return $this->container->view->render($response, 'lieux.twig', ['title'=>'titre', 'message' => 'salut']);
+  }
 }

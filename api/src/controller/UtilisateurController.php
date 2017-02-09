@@ -78,11 +78,5 @@ class UtilisateurController extends AbstractController
 //a finir
     public function checkUser(Request $request, Response $response, $args){
       $user = select()->where('nom', '=', filter_var($request->getParsedBody()['nom'], FILTER_SANITIZE_STRING));
-
-      if($user){
-        if(password_verify($user->password){
-
-        }
-      }
     }
 }

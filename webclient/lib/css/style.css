@@ -35,3 +35,20 @@ html, body {
     color: #FFFFFF;
     border: 1px double;
 }
+
+.ng-enter{
+    transition: 1.5s;
+    opacity:0;
+    transform: translateY(50px);
+}
+
+.ng-enter-stagger{
+    transition-delay:0.3s;
+    transition-duration:0s;
+
+}
+
+.ng-enter-active{
+    transform: translateY(0px);
+    opacity: 1;
+}
