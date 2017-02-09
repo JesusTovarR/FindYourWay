@@ -13,9 +13,6 @@ angular.module('app').factory('LieuFactory', [ '$http', function ($http) {
         indices:function (id, token) {
             return $http.get('http://backend.findyourway.local/game/'+id+'/indices?token='+token);
         },
-        coordonees:function (id, token) {
-            return $http.get('http://backend.findyourway.local/game/'+id+'/coordonees?token='+token);
-        },
         chemin:function (id, token) {
             return $http.get('http://backend.findyourway.local/game/'+id+'/chemin?token='+token);
         },

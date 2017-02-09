@@ -1,11 +1,16 @@
+<<<<<<< HEAD
 angular.module('app').controller('LieuController', ['$scope', '$http', 'LieuFactory',
     function($scope, $http, LieuFactory){
+=======
+angular.module('app').controller('LieuController', ['$scope', '$rootScope', '$http', 'Lieu', 'LieuFactory',
+    function($scope, $rootScope, $http, Lieu, LieuFactory){
+>>>>>>> 58159c38c79eada597f22c69dc72a66915c9d70f
         $scope.newGame = function () {
+
             LieuFactory.newPartie().then(function (response) {
                 $scope.error = undefined;
-                $scope.partie = response.data;
+                $rootScope.partie = response.data;
                 $scope.indications();
-                $scope.coordonees();
                 $scope.chemin();
                 $scope.indices();
                 $scope.destinationFinal();
@@ -22,17 +27,6 @@ angular.module('app').controller('LieuController', ['$scope', '$http', 'LieuFact
 
                console.log($scope.indications=response.data);
                  return $scope.indications=response.data;
-
-            },function (error) {
-                console.log('error');
-            });
-        };
-
-        $scope.coordonees = function (){
-            LieuFactory.coordonees($scope.partie.id, $scope.partie.token).then(function (response){
-
-                // console.log($scope.coordonees=response.data);
-                return $scope.coordonees=response.data;
 
             },function (error) {
                 console.log('error');
