@@ -178,8 +178,8 @@ class LieuxController extends AbstractController
             $cont=0;
             foreach ($lieuxPassage as $lieu)
             {
+                $coordonees[$cont]= array('lat'=>(float)$lieu->lat, 'lng'=>(float)$lieu->lng); // esta es la unica linea que cambie para que fincionara el mapa
                 $cont=$cont+1;
-                $coordonees['Lieu'.$cont]= array('lat'=>$lieu->lat, 'lng'=>$lieu->lng);
                 if($cont==5){
                     $cont=0;
                 }
