@@ -1,11 +1,11 @@
 /**
  * Created by Jesus Tovar on 07/02/2017.
  */
-angular.module('app').directive('indication', [
+angular.module('app').directive('indice', [
     function(){
         return{
             restrict : 'E',
-            templateUrl : 'app/templates/indications.html'
+            templateUrl : 'app/templates/indices.html'
         };
     }
 ]);

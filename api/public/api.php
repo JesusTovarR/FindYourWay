@@ -87,7 +87,7 @@ $app->get('/lieux',
   })->setName('indications')
     ->add('checkToken');
 
-    //Obtenir les indications de chaque lieu pour une partie /game/id_partie/indications?token{}
+    //Obtenir les coordonees de chaque lieu pour une partie /game/id_partie/indications?token{}
     $app->get('/game/{id_partie}/coordonees',
     function (Request $req, Response $resp, $args){
         return (new LieuxController($this))->getCoordonees($req, $resp, $args);
@@ -110,6 +110,12 @@ $app->get('/lieux',
   function  (Request $req, Response $resp, $args){
     return (new LieuxController($this))->getDestByChemin($req, $resp, $args);
   })->setName('destinationByChemin')
+    ->add('checkToken');
+
+$app->get('/game/{id_partie}/indices',
+    function  (Request $req, Response $resp, $args){
+        return (new LieuxController($this))->getDestIndicesByChemin($req, $resp, $args);
+    })->setName('destinationIndicesByChemin')
     ->add('checkToken');
 
 $app->get('/utilisateurs',

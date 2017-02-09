@@ -1,0 +1,198 @@
+body { font-family: sans-serif; }
+h1 { text-align: center; }
+
+#error    { width: 100%; }
+#liste { width: 50%; float: left; }
+#todos     { width: 50%; float: right; }
+
+h2 {
+    font-size: 36px;
+}
+
+.list-block{
+    margin: 0 auto;
+    width: 75%;
+    text-align: center;
+    transition: all linear 0.5s;
+}
+
+.todo-block{
+    margin: 0 auto;
+    width: 63%;
+    text-align: center;
+}
+
+.item{
+    border-radius: 15px;
+    background-color: #72b559;
+    color: #FFFFFF;
+    padding: 1em 0;
+    border: 1px double;
+}
+
+.column-left{
+    width: 50%; float: left;
+}
+
+.column-right{
+    width: 50%; float: right;
+}
+
+.item:hover{
+    background-color: #00c4ff;
+}
+
+.itemclicked{
+    background-color: #00c4ff;
+}
+
+.itemEditing{
+    background-color: darkred;
+}
+
+.itemEditing:hover{
+    background-color: darkred;
+}
+.center{
+    text-align: center;
+}
+
+.todo{
+    background-color: #68a4b5;
+    border-radius: 15px;
+    color: #FFFFFF;
+    padding: 1em 0;
+    border: 1px double;
+}
+
+.todo:hover{
+    background-color: #00c4ff;
+}
+
+.status{
+    width: 24px;
+    height: 24px;
+}
+
+
+.ng-enter{
+    transition: 1.5s;
+    opacity:0;
+}
+
+.ng-enter-stagger{
+    transition-delay:0.3s;
+    transition-duration:0s;
+
+}
+
+.ng-enter-active{
+    opacity: 1;
+}
+
+.ng-leave{
+    transition:0.0s;
+    opacity:1;
+}
+
+.ng-leave-active{
+    opacity: 0;
+}
+
+/*item*/
+.item-list.ng-enter{
+    transition: 1.5s;
+    opacity:0;
+    transform: translateY(50px);
+}
+
+.item-list.ng-enter-stagger{
+    transition-delay:0.3s;
+    transition-duration:0s;
+
+}
+
+.item-list.ng-enter.ng-enter-active{
+    transform: translateY(0px);
+    opacity: 1;
+}
+
+.item-list.ng-leave{
+    transform: translateX(0px);
+    transition:0.3s;
+    opacity:1;
+}
+
+.item-list.ng-leave-active{
+    transform: translateX(-150px);
+    opacity: 0;
+}
+
+/*Todo*/
+
+.todo.ng-enter{
+    transition: 1.3s;
+    opacity:0;
+    transform: translateY(0px);
+}
+
+/*.todo-list.ng-enter-stagger{
+    transition-delay:0.3s;
+    transition-duration:0s;
+
+}*/
+
+.todo.ng-enter.ng-enter-active{
+    transform: translateY(0px);
+    opacity: 1;
+}
+
+.todo.ng-leave{
+    transform: translateX(0px);
+    transition:0.5s;
+    opacity:1;
+}
+
+.todo.ng-leave.ng-leave-active{
+    transform: translateX(300px);
+    opacity: 0;
+}
+
+/* boton */
+.btnActivities{
+    width: 150px;
+    margin-bottom: 5px;
+}
+.btnTodo{
+    width: 125px;
+    margin-bottom: 5px;
+}
+
+.btn {
+    font-size: .8em;
+    padding: 0.7em;
+    text-align: center;
+    background-color: #5858FB;
+    color: white;
+    border: solid;
+    border-style: none;
+    border-color: none;
+    border-width: 2px;
+    border-radius: 10px;
+}
+
+.btn:hover {
+    background-color: #76CE50;
+    color: white;
+    cursor: pointer;
+}
+
+.btn:active {
+    background-color: #6DB250;
+    color: white;
+}
+
+
+.box-container{
+    background: #72b559;
+}
