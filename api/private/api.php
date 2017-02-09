@@ -8,6 +8,7 @@ use api\controller\PrivateController;
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use Illuminate\Database\Capsule\Manager as DB;
+use Slim\Middleware\TokenAuthentication;
 require_once '../vendor/autoload.php';
 
 
@@ -49,12 +50,17 @@ function (Request $req, Response $resp, $args){
   return (new PrivateController($this))->addIndice($req, $resp, $args);
 })->setName('addIndice');
 
-
 //modification d'un indice
 $app->put('/lieu/{id}/modifiedIndice',
 function (Request $req, Response $resp, $args){
   return (new privateController($this))->modifyIndice($req, $resp, $args);
 })->setName('modifiedIndice');
+
+//suppression d'un lieu lieu/{id}/deletelieu
+$app->delete('/lieu/{id}/deleteLieu',
+function (Request $req, Response $resp, $args){
+  return (new privateController($this))->deleteLieu($req, $resp, $args);
+})->setName('deleteLieu');
 
 
 $app->run();
