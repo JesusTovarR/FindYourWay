@@ -8,6 +8,8 @@ angular.module('app').controller('LieuController', ['$scope', '$http', 'Lieu', '
                 $scope.partie = response.data;
                 $scope.indications();
                 $scope.coordonees();
+                $scope.chemin();
+                $scope.destinationFinal();
             }, function (error) {
                 console.log('error');
             });
@@ -16,8 +18,7 @@ angular.module('app').controller('LieuController', ['$scope', '$http', 'Lieu', '
         $scope.indications = function (){
             LieuFactory.indications($scope.partie.id, $scope.partie.token).then(function (response){
 
-                console.log(response.data);
-               // $scope.chemin=response.data;
+               console.log($scope.indications=response.data);
 
             },function (error) {
                 console.log('error');
@@ -27,8 +28,17 @@ angular.module('app').controller('LieuController', ['$scope', '$http', 'Lieu', '
         $scope.coordonees = function (){
             LieuFactory.coordonees($scope.partie.id, $scope.partie.token).then(function (response){
 
-                console.log(response.data);
-                // $scope.chemin=response.data;
+                console.log($scope.coordonees=response.data);
+
+            },function (error) {
+                console.log('error');
+            });
+        };
+
+        $scope.indices = function (){
+            LieuFactory.indices($scope.partie.id, $scope.partie.token).then(function (response){
+
+                console.log( $scope.indices=response.data);
 
             },function (error) {
                 console.log('error');
@@ -38,18 +48,24 @@ angular.module('app').controller('LieuController', ['$scope', '$http', 'Lieu', '
         $scope.chemin = function (){
             LieuFactory.chemin($scope.partie.id, $scope.partie.token).then(function (response){
 
-                console.log(response.data.Lieu1.nom_lieu);
-                $scope.chemin=response.data;
+                console.log( $scope.chemin=response.data);
 
             },function (error) {
                 console.log('error');
             });
         };
 
+        $scope.destinationFinal = function (){
+            LieuFactory.destinationFinal($scope.partie.id, $scope.partie.token).then(function (response){
+
+                console.log( $scope.destinationFinal=response.data);
+
+            },function (error) {
+                console.log('error');
+            });
+        };
 
         $scope.newGame();
-
-
 
     }
 ]);

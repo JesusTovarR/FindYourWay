@@ -28,6 +28,7 @@ class PrivateController extends AbstractController
            $lieu->coord_y = filter_var($request->getParsedBody()['coord_y'], FILTER_SANITIZE_NUMBER_FLOAT);
            $lieu->indication = filter_var($request->getParsedBody()['indication'], FILTER_SANITIZE_STRING);
            $lieu->description = filter_var($request->getParsedBody()['description'], FILTER_SANITIZE_STRING);
+           $lieu->dest_finale = 0;
            $lieu->save();
            $response = $this->json_success($response, 201, $lieu->toJson());
       }else{
@@ -57,6 +58,8 @@ class PrivateController extends AbstractController
         $response = $this->json_error($response, 500, "supprimer un indice pour en ajouter un nouveau");
         return $response;
       }
+      $lieu->save();
+      $lieu->dest_finale = $lieu->isDestFinale();
       $lieu->save();
       $response = $this->json_success($response, 201, $lieu->toJson());
       return $response;
