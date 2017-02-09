@@ -15,6 +15,7 @@
     <script src="app/controllers/map_controller.js"></script>
     <script src="app/directives/lieu_directive.js"></script>
     <script src="app/factory/lieu_factory.js"></script>
+    <script src="app/factory/map_factory.js"></script>
     <script src="app/models/lieu.js"></script>
 </head>
 <body ng-app="app">
@@ -42,9 +43,10 @@
 </div>
 </div>
 
-    <div id="map"></div>
+<div ng-controller="MapController" id="map"></div>
 
-<script src="app/controllers/map_controller.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFeIoKhcRxrDwZj_or9ry618Xta7dD1OM&callback=initMap&libraries=geometry" async defer></script>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFeIoKhcRxrDwZj_or9ry618Xta7dD1OM&libraries=geometry" async defer></script>
 </body>
 </html>

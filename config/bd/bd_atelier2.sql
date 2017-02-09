@@ -26,12 +26,12 @@ create table chemin(
     id_lieu3 int not null,
     id_lieu4 int not null,
     id_lieu5 int not null,
-    FOREIGN KEY (id_dest_finale) REFERENCES lieu(id),
-	  FOREIGN KEY (id_lieu1) REFERENCES lieu(id),
-    FOREIGN KEY (id_lieu2) REFERENCES lieu(id),
-    FOREIGN KEY (id_lieu3) REFERENCES lieu(id),
-    FOREIGN KEY (id_lieu4) REFERENCES lieu(id),
-    FOREIGN KEY (id_lieu5) REFERENCES lieu(id) 
+    FOREIGN KEY (id_dest_finale) REFERENCES lieu(id) on delete cascade,
+	FOREIGN KEY (id_lieu1) REFERENCES lieu(id) on delete cascade,
+    FOREIGN KEY (id_lieu2) REFERENCES lieu(id) on delete cascade,
+    FOREIGN KEY (id_lieu3) REFERENCES lieu(id) on delete cascade,
+    FOREIGN KEY (id_lieu4) REFERENCES lieu(id) on delete cascade,
+    FOREIGN KEY (id_lieu5) REFERENCES lieu(id) on delete cascade 
 );
 
 create table partie(
