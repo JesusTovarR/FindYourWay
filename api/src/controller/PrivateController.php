@@ -83,6 +83,7 @@ class PrivateController extends AbstractController
     //suppression d'un lieu lieu/{id}/deleteLieu
     public function deleteLieu(Request $request, Response $response, $args){
 
+      try{
       //je supprime un chemin
       $chemin = Chemin::select()->where('id_dest_finale','=',$args['id'])
         ->orWhere('id_lieu1','=',$args['id'])
@@ -104,6 +105,11 @@ class PrivateController extends AbstractController
 
       $response = $this->json_success($response, 201, "deletion done");
       return $response;
+    }catch(ModelNotFoundException $e) {
+        $response = $response->withStatus(404)->withHeader('Content-type', 'application/json');
+        $errorMessage = ["error" => "id not found" ];
+        $response->getBody()->write(json_encode($errorMessage));
     }
 
+  }
 }
