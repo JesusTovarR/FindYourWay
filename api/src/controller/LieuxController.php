@@ -195,7 +195,7 @@ class LieuxController extends AbstractController
 
 
     // Obtenir tous les indices pour une destination finale indices/id
-    public function getIndices(Request $request, Response $response, $args){
+/*    public function getIndices(Request $request, Response $response, $args){
       $response = $response->withStatus(200)->withHeader('Content-type', 'application/json');
       $lieu = Lieu::select()->where('id', '=', $args['id'])->firstOrFail();
 
@@ -210,7 +210,7 @@ class LieuxController extends AbstractController
         $response->getBody()->write(json_encode($errorMessage));
       }
       return $response;
-    }
+    }*/
 
 
     public function getLieuById(Request $request, Response $response, $args){
@@ -251,6 +251,28 @@ class LieuxController extends AbstractController
       return $response;
     }
 
+// Obtenir tous les indices pour une destination finale indices/{id_partie}/indices?token=
+    public function getDestIndicesByChemin(Request $request, Response $response, $args){
+        try{
+            $partie = Partie::select()->where('id', '=', $args['id_partie'])->firstOrFail();
+            $chemin = Chemin::select()->where('id', '=', $partie->id_chemin)->firstOrFail();
+            $destIndices = Lieu::select('indice1', 'indice2', 'indice3', 'indice4', 'indice5')->where('id', '=', $chemin->id_dest_finale)->firstOrFail();
+            if((!empty($destIndices->indice1)) || (!empty($destIndices->indice2)) || (!empty($destIndices->indice3)) || (!empty($destIndices->indice4)) || (!empty($destIndices->indice5))){
+
+                $indices = array("indice1"=>$destIndices->indice1 , "indice2"=>$destIndices->indice2,"indice3"=>$destIndices->indice3,
+                    "indice4"=>$destIndices->indice4,"indice5"=>$destIndices->indice5);
+                $response->getBody()->write(json_encode($indices));
+            }else{
+                $response = $response->withStatus(404)->withHeader('Content-type', 'application/json');
+                $errorMessage = ["error" => "ressource not found"];
+                $response->getBody()->write(json_encode($errorMessage));
+            }
+        } catch (ModelNotFoundException $e){
+            $response = $this->json_error($response, 500, 'une erreur est survenue');
+        }
+        return $response;
+    }
+
 
     //Obtenir les 5 lieux d'une partie /game/{id_partie}/lieux_partie?token={}
     public function getLieuxPartie(Request $request, Response $response, $args){
@@ -263,7 +285,7 @@ class LieuxController extends AbstractController
         $compteur = 1;
 
         foreach ($lieuxPassage as $idLieu){
-          $lieu = Lieu::select('nom_lieu')->where('id','=', $idLieu)->firstOrFail();
+          $lieu = Lieu::select('nom_lieu', 'lat', 'lng', 'indication', 'description', 'image')->where('id','=', $idLieu)->firstOrFail();
           $lieux_partie['Lieu'.$compteur] = $lieu;
           $compteur++;
         }

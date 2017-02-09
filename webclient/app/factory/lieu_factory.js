@@ -10,6 +10,9 @@ angular.module('app').factory('LieuFactory', [ '$http', function ($http) {
         indications:function (id, token) {
             return $http.get('http://backend.findyourway.local/game/'+id+'/indications?token='+token);
         },
+        indices:function (id, token) {
+            return $http.get('http://backend.findyourway.local/game/'+id+'/indices?token='+token);
+        },
         coordonees:function (id, token) {
             return $http.get('http://backend.findyourway.local/game/'+id+'/coordonees?token='+token);
         },
@@ -18,7 +21,11 @@ angular.module('app').factory('LieuFactory', [ '$http', function ($http) {
         },
         destinationFinal:function (id, token) {
             return $http.get('http://backend.findyourway.local/game/'+id+'/destination?token='+token);
+        },
+        lieux:function (id, token) {
+            return $http.get('http://backend.findyourway.local/game/'+id+'/lieux_partie?token='+token);
         }
+
     }
 
 }]);

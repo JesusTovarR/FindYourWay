@@ -20,13 +20,6 @@
 <body ng-app="app">
 
 <div  ng-controller="LieuController">
-    <button ng-click="newGame()">Démarrer</button>
-    <div ng-repeat="lieu in lieux" >
-        <lieu></lieu>
-    </div>
-</div>
-
-
 <div id="info">
     <nav class="navbar navbar-default" >
         <div class="masthead text-center">
@@ -34,11 +27,19 @@
         </div>
         <div class="text-center">
             <button class=" btn btn-primary">Regles du jeu</button>
-            <button class=" btn btn-primary">Demarrer</button>
+            <button class=" btn btn-primary" ng-click="newGame()">Demarrer</button>
             <button class=" btn btn-primary">Redemarrer</button>
         </div>
     </nav>
+    <div ng-repeat="indication in indications" >
+        <indication></indication>
+    </div>
+    <hr/>
+    <div ng-repeat="indices in indice" >
+        <indice></indice>
+    </div>
 
+</div>
 </div>
 
     <div id="map"></div>
