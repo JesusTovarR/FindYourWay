@@ -2,11 +2,8 @@
 angular.module('app').controller('LieuController', ['$scope', '$rootScope', '$http', 'Lieu', 'LieuFactory',
     function($scope, $rootScope, $http, Lieu, LieuFactory){
 
-        $scope.ind1=false;
-        $scope.ind2=false;
-        $scope.ind3=false;
-        $scope.ind4=false;
-        $scope.ind5=false;
+        $scope.in1=true;
+        $scope.desFin=false;
 
         $scope.newGame = function () {
 
@@ -19,18 +16,30 @@ angular.module('app').controller('LieuController', ['$scope', '$rootScope', '$ht
                 $scope.indices();
                 $scope.destinationFinal();
                 $scope.lieux();
+                $scope.coordonees();
             }, function (error) {
                 console.log('error');
             });
         };
 
         $scope.indications = function (){
-            var id=localStorage.getItem("Partie");
-            var token=localStorage.getItem("Token");
             LieuFactory.indications($scope.partie.id, $scope.partie.token).then(function (response){
 
-               console.log($scope.indications=response.data);
-                 return $scope.indications=response.data;
+                $scope.indications=response.data;
+                console.log($scope.indications);
+                return $scope.indications;
+
+            },function (error) {
+                console.log('error');
+            });
+        };
+
+        $scope.coordonees = function (){
+            LieuFactory.coordonees($scope.partie.id, $scope.partie.token).then(function (response){
+
+                $scope.coordonees=response.data;
+                console.log($scope.coordonees);
+                return $scope.coordonees;
 
             },function (error) {
                 console.log('error');
