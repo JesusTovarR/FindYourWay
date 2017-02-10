@@ -15,6 +15,7 @@ angular.module('app').controller('LieuController', ['$scope', '$rootScope', '$ht
                 $scope.indices();
                 $scope.destinationFinal();
                 $scope.lieux();
+                $scope.coordonees();
             }, function (error) {
                 console.log('error');
             });
@@ -26,6 +27,18 @@ angular.module('app').controller('LieuController', ['$scope', '$rootScope', '$ht
                 $scope.indications=response.data;
                 console.log($scope.indications);
                 return $scope.indications;
+
+            },function (error) {
+                console.log('error');
+            });
+        };
+
+        $scope.coordonees = function (){
+            LieuFactory.coordonees($scope.partie.id, $scope.partie.token).then(function (response){
+
+                $scope.coordonees=response.data;
+                console.log($scope.coordonees);
+                return $scope.coordonees;
 
             },function (error) {
                 console.log('error');
