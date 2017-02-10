@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<head> <title>Modifier: {{lieu.nom_lieu}}</title> </head>
+<body>
+<h2>{{lieu.nom_lieu}}</h2>
+<!--TODO: ajouter des informations sur les champs pour l'utilisateur-->
+<form method = "post" action="http://admin.findyourway.local/admin/lieu/{{lieu.id}}/modifier">
+Nom du lieu:* <input type="text" name="nom_lieu" value="{{lieu.nom_lieu}}"><br>
+latitude:* <input type="text" name="coord_x" value="{{lieu.coord_x}}"><br>
+longitude:* <input type="text" name="coord_y" value="{{lieu.coord_y}}"><br>
+indication:* <input type="text" name="indication" value="{{lieu.indication}}"><br>
+description: <input type="text" name="description" value="{{lieu.description}}"><br>
+image: <input type="text" name="image" value="{{lieu.image}}"><br>
+indice n°1: <input type="text" name="indice1" value="{{lieu.indice1}}"><br>
+indice n°2: <input type="text" name="indice2" value="{{lieu.indice2}}"><br>
+indice n°3: <input type="text" name="indice3" value="{{lieu.indice3}}"><br>
+indice n°4: <input type="text" name="indice4" value="{{lieu.indice4}}"><br>
+indice n°5: <input type="text" name="indice5" value="{{lieu.indice5}}"><br>
+<input type="submit" value="Submit">
+</form>
+
+<form method="post" action = "http://admin.findyourway.local/admin/lieu/{{lieu.id}}/supprimerlieu">
+  <input type="hidden" name="_method" value="DELETE" />
+  <input type="submit" name="_method" value="supprimer" />
+</form>
+
+Les champs marqués d'un (*) sont obligatoires.
