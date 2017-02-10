@@ -1,0 +1,1 @@
+{"virtualbox":{"/var/www":{"guestpath":"/var/www","hostpath":"/var/www/html/LP-SICIIE/FindYourWay/www","disabled":false,"__vagrantfile":true},"/vagrant":{"guestpath":"/vagrant","hostpath":"/var/www/html/LP-SICIIE/FindYourWay","disabled":false,"__vagrantfile":true}}}
