@@ -3,19 +3,65 @@
 <head>
     <meta charset="UTF-8">
 
-    <script src="../lib/js/jquery-3.1.1.min.js"></script>
-    <script src="../lib/js/angular.min.js"></script>
-    <script src="../lib/js/angular-animate.js"></script>
-    <script src="../lib/js/bootstrap.min.js"></script>
+    <script src="lib/js/jquery-3.1.1.min.js"></script>
+    <script src="lib/js/angular.min.js"></script>
+    <script src="lib/js/angular-animate.js"></script>
 
-    <link href="style.css" type="text/css" rel="stylesheet">
-    <link href="../lib/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
+    <link href="lib/css/style.css" type="text/css" rel="stylesheet">
+    <link href="lib/css/bootstrap.min.css" type="text/css" rel="stylesheet"/>
 
     <script src="app/app.js"></script>
-
+    <script src="app/controllers/lieu_controller.js"></script>
+    <script src="app/controllers/map_controller.js"></script>
+    <script src="app/directives/lieu_directive.js"></script>
+    <script src="app/directives/indice_directive.js"></script>
+    <script src="app/factory/lieu_factory.js"></script>
+    <script src="app/factory/map_factory.js"></script>
+    <script src="app/models/lieu.js"></script>
 </head>
 <body ng-app="app">
 
+<div  ng-controller="LieuController">
+<div id="info">
+    <nav class="navbar navbar-default" >
+        <div class="masthead text-center">
+            <h3 class="text-muted">Find Your Way</h3>
+        </div>
+        <div class="text-center">
+            <button class=" btn btn-primary">Regles du jeu</button>
+            <button class=" btn btn-primary" ng-click="newGame()">Demarrer</button>
+            <button class=" btn btn-primary">Redemarrer</button>
+        </div>
+    </nav>
+<!--    <div ng-repeat="indication in indications" >
+        <indication></indication>
+    </div>-->
+    <div class="indication-block ind" >
+        <h6>{{indications.Lieu1.indic}}</h6>
+    </div>
+    <div class="indication-block ind" >
+        <h6>{{indications.Lieu2.indic}}</h6>
+    </div>
+    <div class="indication-block ind" >
+        <h6>{{indications.Lieu3.indic}}</h6>
+    </div>
+    <div class="indication-block ind">
+        <h6>{{indications.Lieu4.indic}}</h6>
+    </div>
+    <div class="indication-block ind">
+        <h6>{{indications.Lieu5.indic}}</h6>
+    </div>
+    <hr/>
+    <div ng-repeat="indices in indice" class="indications" >
+        <indice></indice>
+    </div>
 
+</div>
+</div>
+<div ng-controller="MapController" id="map"></div>
+
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBFeIoKhcRxrDwZj_or9ry618Xta7dD1OM&libraries=geometry" async defer></script>
 </body>
 </html>

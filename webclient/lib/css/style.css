@@ -1,0 +1,54 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#info{
+    width: 30%;
+    float: left;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+#map{
+    margin-top: 1%;
+    float: left;
+    width: 70%;
+    height: 95%;
+    border-radius: 15px;
+    box-shadow: 2px 2px 25px rgba(13, 13, 13, 0.49);
+    border: #45b3ff;
+    box-sizing: border-box;
+}
+
+.indication-block{
+    margin: 0 auto;
+    width: 100%;
+    height: 60px;
+    text-align: center;
+}
+
+.ind{
+    border-radius: 15px;
+    background-color: #45b3ff;
+    color: #FFFFFF;
+    border: 1px double;
+}
+
+.ng-show{
+    transition: 1.5s;
+    opacity:0;
+    transform: translateY(50px);
+}
+
+.ng-show-stagger{
+    transition-delay:0.3s;
+    transition-duration:0s;
+
+}
+
+.ng-show.ng-enter-active{
+    transform: translateY(0px);
+    opacity: 1;
+}
