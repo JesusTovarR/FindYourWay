@@ -131,26 +131,20 @@ class LieuxController extends AbstractController
       try {
           $response = $response->withStatus(200)->withHeader('Content-type', 'application/json');
           $partie = Partie::select()->where('id', '=', $args['id_partie'])->firstOrFail();
-          $lieu = Lieu::select()->get();
           $chemin = Chemin::select()->where('id', '=', $partie->id_chemin)->firstOrFail();
           $indications = array();
-
-          $lieuxPassage = array();
-          for ($i = 1; $i < 6; $i++) {
-              $lieuxPassage[] = $chemin->pluck('id_lieu' . $i);
-          }
-
-          $lieuxPassage = json_decode($lieu->toJson());
+              $ids=['id1'=>$chemin->id_lieu1, 'id2'=>$chemin->id_lieu2, 'id3'=>$chemin->id_lieu3, 'id4'=>$chemin->id_lieu4, 'id5'=>$chemin->id_lieu5];
         $cont=0;
-        foreach ($lieuxPassage as $lieu)
+        foreach ($ids as $valeur)
         {
-            $cont=$cont+1;
-//          $indications[$lieu->nom_lieu] = $lieu->indication;
-          $indications['Lieu'.$cont] = $lieu->indication;
-            if($cont==5){
-                $cont=0;
+                $lieu = Lieu::select()->where('id', '=', $valeur)->firstOrFail();
+                $cont=$cont+1;
+                $indications['Lieu'.$cont] = ['indic'=>$lieu->indication, 'id'=>$cont];
+                if($cont==5){
+                    $cont=0;
+                }
             }
-        }
+
         $response->getBody()->write(json_encode($indications));
       }catch(ModelNotFoundException $e) {
         $response = $response->withStatus(404)->withHeader('Content-type', 'application/json');

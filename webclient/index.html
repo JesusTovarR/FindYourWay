@@ -30,14 +30,30 @@
         <div class="text-center">
             <button class=" btn btn-primary">Regles du jeu</button>
             <button class=" btn btn-primary" ng-click="newGame()">Demarrer</button>
-            <button class=" btn btn-primary">Redemarrer</button>
+            <button class=" btn btn-primary" >Redemarrer</button>
         </div>
     </nav>
-    <div ng-repeat="indication in indications" >
+ <!--   <div ng-repeat="indication in indications">
         <indication></indication>
+    </div>-->
+  <div class="indication-block ind" ng-show="ind1">
+        <h6>{{indications.Lieu1.indic}}</h6>
     </div>
+    <div class="indication-block ind" ng-show="ind1">
+        <h6>{{indications.Lieu5}}</h6>
+    </div>
+    <div class="indication-block ind" ng-show="ind1">
+        <h6>{{indications.Lieu1}}</h6>
+    </div>
+    <div class="indication-block ind" ng-show="ind1">
+        <h6>{{indications.Lieu1}}</h6>
+    </div>
+    <div class="indication-block ind" ng-show="ind1">
+        <h6>{{indications.Lieu1}}</h6>
+    </div>
+
     <hr/>
-    <div ng-repeat="indice in indices" class="indications" >
+    <div ng-repeat="indice in indices" class="indications">
         <indice></indice>
     </div>
 
