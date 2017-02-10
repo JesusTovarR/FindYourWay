@@ -66,6 +66,8 @@ angular.module('app').controller('MapController', ['$scope', '$rootScope', '$htt
             return;
         }
 
+
+        /**/
         /*
          for(var c in  $rootScope.coordonees){
          console.log($rootScope.coordonees[c]);
