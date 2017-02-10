@@ -6,7 +6,8 @@
     "twbs/bootstrap": "4.0.0-alpha.6",
     "tuupola/slim-jwt-auth": "^2.3",
     "dyorg/slim-token-authentication": "^0.3.2",
-    "twig/twig": "~2.0"
+    "twig/twig": "1.*",
+    "slim/twig-view": "^2.2"
   },
   "autoload":{
     "psr-4": {

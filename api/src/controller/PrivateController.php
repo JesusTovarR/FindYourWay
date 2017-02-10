@@ -67,8 +67,16 @@ class PrivateController extends AbstractController
     }
 
     //modification d'un indice
-    public function modifyIndice(Request $request, Response $response, $args){
+    public function modifierLieu(Request $request, Response $response, $args){
+try{
         $lieu = Lieu::select()->where('id','=',$args['id'])->firstOrFail();
+        //  var_dump($request->getParsedBody());die;
+        $lieu->nom_lieu = filter_var($request->getParsedBody()['nom_lieu'], FILTER_SANITIZE_STRING);
+        $lieu->coord_x = filter_var($request->getParsedBody()['coord_x'], FILTER_SANITIZE_STRING);
+        $lieu->coord_y = filter_var($request->getParsedBody()['coord_y'], FILTER_SANITIZE_STRING);
+        $lieu->indication = filter_var($request->getParsedBody()['indication'], FILTER_SANITIZE_STRING);
+        $lieu->description = filter_var($request->getParsedBody()['description'], FILTER_SANITIZE_STRING);
+        $lieu->image = filter_var($request->getParsedBody()['image'], FILTER_SANITIZE_STRING);
         $lieu->indice1 = filter_var($request->getParsedBody()['indice1'], FILTER_SANITIZE_STRING);
         $lieu->indice2 = filter_var($request->getParsedBody()['indice2'], FILTER_SANITIZE_STRING);
         $lieu->indice3 = filter_var($request->getParsedBody()['indice3'], FILTER_SANITIZE_STRING);
@@ -76,6 +84,12 @@ class PrivateController extends AbstractController
         $lieu->indice5 = filter_var($request->getParsedBody()['indice5'], FILTER_SANITIZE_STRING);
         $lieu->save();
         $response = $this->json_success($response, 201, $lieu->toJson());
+      }catch(ModelNotFoundException $e) {
+          $response = $response->withStatus(404)->withHeader('Content-type', 'application/json');
+          $errorMessage = ["error" => "id not found" ];
+          $response->getBody()->write(json_encode($errorMessage));
+      }
+    }
         return $response;
     }
 
@@ -110,6 +124,17 @@ class PrivateController extends AbstractController
         $errorMessage = ["error" => "id not found" ];
         $response->getBody()->write(json_encode($errorMessage));
     }
+  }
 
+  public function adminLieu(Request $request, Response $response, $args){
+    $lieux = Lieu::select()->get();
+    $tabLieux = $lieux->toArray();
+   return $this->container->view->render($response, 'lieux.html.twig',  ['tabLieux' => $tabLieux]);
+  }
+
+  public function renderFormLieu(Request $request, Response $response, $args){
+    $lieu = Lieu::select()->where('id', '=', $args['id'])->firstOrFail();
+    $lieu = $lieu->toArray();
+    return $this->container->view->render($response, 'lieu.html.twig',  ['lieu' => $lieu]);
   }
 }

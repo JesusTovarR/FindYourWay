@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<head> <title>Oh le beau Template</title> </head>
+<body>  
+<ul>
+
+{% for it in tabLieux %}
+  <p><a href='http://admin.findyourway.local/admin/formlieu/{{it.id}}'>{{it.nom_lieu}}</a></p>
+{% endfor %}
+</ul>

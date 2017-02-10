@@ -38,6 +38,12 @@ $configuration['notFoundHandler'] = function ($c) {
 };
 
 $c = new \Slim\Container($configuration);
+$c['view'] = function($c){
+  $view = new \Slim\Views\Twig(__DIR__.'/backoffice/templates');
+
+   return $view;
+};
+
 $app = new Slim\App($c) ;
 
 $app->post('/lieu',
@@ -50,17 +56,29 @@ function (Request $req, Response $resp, $args){
   return (new PrivateController($this))->addIndice($req, $resp, $args);
 })->setName('addIndice');
 
-//modification d'un indice
-$app->put('/lieu/{id}/modifiedIndice',
-function (Request $req, Response $resp, $args){
-  return (new privateController($this))->modifyIndice($req, $resp, $args);
-})->setName('modifiedIndice');
+//formulaire modifier un lieu
+$app->get('/admin/formlieu/{id}',
+function(Request $req, Response $resp, $args){
+  return (new privateController($this))->renderFormLieu($req, $resp, $args);
+})->setName('renderFormLieu');
 
-//suppression d'un lieu lieu/{id}/deletelieu
-$app->delete('/lieu/{id}/deleteLieu',
+//modification d'un lieu
+$app->post('/admin/lieu/{id}/modifier',
+function (Request $req, Response $resp, $args){
+  return (new privateController($this))->modifierLieu($req, $resp, $args);
+})->setName('modifierLieu');
+
+//supprimer un lieu
+$app->delete('/admin/lieu/{id}/supprimerlieu',
 function (Request $req, Response $resp, $args){
   return (new privateController($this))->deleteLieu($req, $resp, $args);
 })->setName('deleteLieu');
+
+//accès a tout les lieux pour les modifier
+$app->get('/admin/lieux',
+  function (Request $req, Response $resp, $args){
+    return (new privateController($this))->adminLieu($req, $resp, $args);
+  })->setName('adminLieu');
 
 
 $app->run();
