@@ -24,8 +24,12 @@ angular.module('app').factory('LieuFactory', [ '$http', function ($http) {
         }/*,
         coordonees:function (id, token) {
             return $http.get('http://backend.findyourway.local/game/'+id+'/coordonees?token='+token);
+<<<<<<< HEAD
         }*/
 
+=======
+        }
+>>>>>>> fe9f14ab68e1fc04f5abf94070497f910da113ed
     }
 
 }]);

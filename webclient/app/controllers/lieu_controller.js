@@ -11,6 +11,7 @@ angular.module('app').controller('LieuController', ['$scope', '$rootScope', '$ht
                 $scope.error = undefined;
                 $rootScope.partie = response.data;
                 $scope.indications();
+                $scope.coordonees();
                 $scope.chemin();
                 $scope.indices();
                 $scope.destinationFinal();
@@ -44,6 +45,15 @@ angular.module('app').controller('LieuController', ['$scope', '$rootScope', '$ht
                 console.log('error');
             });
         };*/
+
+        $scope.coordonees = function (){
+            LieuFactory.coordonees($rootScope.partie.id, $rootScope.partie.token).then(function (response){
+                console.log($scope.coordonees=response.data);
+                 $rootScope.coordonees=response.data;
+            },function (error) {
+                console.log('error');
+            });
+        };
 
         $scope.chemin = function (){
             LieuFactory.chemin($scope.partie.id, $scope.partie.token).then(function (response){
